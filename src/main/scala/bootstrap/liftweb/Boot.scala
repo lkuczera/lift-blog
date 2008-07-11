@@ -49,6 +49,8 @@ class Boot {
     val entries = Menu(Loc("Home", List("index"), "Home")) ::  Menu(Loc("Post",List("posting"),"Post to blog", loggedIn)) ::
     Menu(Loc("Edit",List("edit"),"Edit post", loggedIn, Hidden)) ::
     Menu(Loc("Details", List("details"), "Details", Hidden)) ::
+    Menu(Loc("feed", List("feed"), "feed", Hidden)) ::
+    Menu(Loc("RssView", List("RssView", "feed"), "RssView", Hidden)) ::
     User.sitemap 
 
     LiftRules.setSiteMap(SiteMap(entries:_*))
@@ -75,8 +77,11 @@ class Boot {
     LiftRules.liftRequest.append { 
     	case Req("static" :: _, _, _) => false 
     } 
-    LiftRules.useXhtmlMimeType = false 
+    LiftRules.useXhtmlMimeType = true 
     
+    LiftRules.rewrite.append {
+    	case RewriteRequest(ParsePath("feed" :: Nil,_,_,_),_,_)  => RewriteResponse(List("RssView","feed")) 
+    }
   }
 
   /**

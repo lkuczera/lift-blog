@@ -48,7 +48,7 @@
 			<artifactId>lift-textile_2.8.0</artifactId>
 			<version>${lift.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
