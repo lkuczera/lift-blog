@@ -29,8 +29,9 @@ class Boot {
 
       DB.defineConnectionManager(DefaultConnectionIdentifier, vendor)
     }
+    Schemifier.schemify(true, Log.infoF _, User, Post, PostTag, Tag, Comment)
     // create default user if none is present
-    if(DB.runQuery("select * from user")._2.isEmpty) {
+    if(DB.runQuery("select * from users")._2.isEmpty) {
 	    val res = this.getClass.getResourceAsStream("/basic.sql");
 	    println("Crating basic database from classpath://basic.sql;")
 	    DB.use(DefaultConnectionIdentifier)( con => DB.prepareStatement(IOUtils.toString(res), con) { stmt => stmt.execute})
@@ -40,7 +41,6 @@ class Boot {
     
     // where to search snippet
     LiftRules.addToPackages("org.liftblog")
-    Schemifier.schemify(true, Log.infoF _, User, Post, PostTag, Tag, Comment)
     // checks if user is logged in
     val loggedIn = If(() => User.loggedIn_?,
               () => RedirectResponse("/user_mgt/login"))
