@@ -9,8 +9,8 @@ import _root_.net.liftweb.sitemap.Loc._
 import Helpers._
 import _root_.net.liftweb.mapper.{DB, ConnectionManager, Schemifier, DefaultConnectionIdentifier, StandardDBVendor}
 import _root_.java.sql.{Connection, DriverManager}
-import _root_.pl.jextreme.model._
-
+import _root_.org.liftblog.model._
+import org.apache.commons.io.IOUtils
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -29,7 +29,15 @@ class Boot {
 
       DB.defineConnectionManager(DefaultConnectionIdentifier, vendor)
     }
-
+    // create default user if none is present
+    if(DB.runQuery("select * from user")._2.isEmpty) {
+	    val res = this.getClass.getResourceAsStream("/basic.sql");
+	    println("Crating basic database from classpath://basic.sql;")
+	    DB.use(DefaultConnectionIdentifier)( con => DB.prepareStatement(IOUtils.toString(res), con) { stmt => stmt.execute})
+    }    
+    
+    
+    
     // where to search snippet
     LiftRules.addToPackages("org.liftblog")
     Schemifier.schemify(true, Log.infoF _, User, Post, PostTag, Tag, Comment)

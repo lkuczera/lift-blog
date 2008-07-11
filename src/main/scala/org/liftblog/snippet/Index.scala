@@ -1,10 +1,10 @@
-package pl.jextreme.snippet
+package org.liftblog.snippet
 import scala.xml._
 
-import pl.jextreme.model.{Post,Comment,User}
+import org.liftblog.model.{Post,User,Comment}
 import net.liftweb.mapper._
 import java.text.SimpleDateFormat
-import scala.xml._
+import scala.xml.{NodeSeq, Text}
 import net.liftweb._ 
 import mapper._ 
 import http._ 

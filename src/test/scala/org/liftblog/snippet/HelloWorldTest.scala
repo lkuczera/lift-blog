@@ -1,4 +1,4 @@
-package pl.jextreme {
+package org.liftblog {
 package snippet {
 
 import org.specs._

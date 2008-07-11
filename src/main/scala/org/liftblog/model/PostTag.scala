@@ -1,4 +1,4 @@
-package pl.jextreme.model
+package org.liftblog.model
 import net.liftweb.mapper._
 
 class PostTag extends LongKeyedMapper[PostTag] with IdPK{

@@ -1,4 +1,4 @@
-package pl.jextreme {
+package org.liftblog {
 package lib {
 
 import net.liftweb._

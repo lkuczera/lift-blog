@@ -1,6 +1,6 @@
-package pl.jextreme.snippet
+package org.liftblog.snippet
 import scala.xml._
-import pl.jextreme.model._
+import org.liftblog.model._
 import _root_.net.liftweb.util._
 import _root_.net.liftweb.common._
 import _root_.net.liftweb.util.Helpers

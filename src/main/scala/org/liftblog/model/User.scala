@@ -1,4 +1,4 @@
-package pl.jextreme {
+package org.liftblog {
 package model {
 
 import _root_.net.liftweb.mapper._

@@ -1,6 +1,6 @@
-package pl.jextreme.snippet
+package org.liftblog.snippet
 import scala.xml._
-import pl.jextreme.model.User
+import org.liftblog.model.User
 
 class Util {
 	def loggedIn(in: NodeSeq): NodeSeq = Text("")
