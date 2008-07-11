@@ -31,7 +31,7 @@ class Boot {
     }
 
     // where to search snippet
-    LiftRules.addToPackages("pl.jextreme")
+    LiftRules.addToPackages("org.liftblog")
     Schemifier.schemify(true, Log.infoF _, User, Post, PostTag, Tag, Comment)
     // checks if user is logged in
     val loggedIn = If(() => User.loggedIn_?,
@@ -42,8 +42,6 @@ class Boot {
     Menu(Loc("Edit",List("edit"),"Edit post", loggedIn, Hidden)) ::
     Menu(Loc("Details", List("details"), "Details", Hidden)) ::
     User.sitemap 
-//    ::: Post.menus 
-    //::: Comment.menus
 
     LiftRules.setSiteMap(SiteMap(entries:_*))
 
