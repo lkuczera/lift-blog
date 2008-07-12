@@ -100,6 +100,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>blog</finalName>
 		<sourceDirectory>src/main/scala</sourceDirectory>
 		<testSourceDirectory>src/test/scala</testSourceDirectory>
 		<plugins>
@@ -163,8 +164,9 @@
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<version>1.0-beta-1</version>
 				<configuration>
-					<url>http://gates.itigo.pl:8080/manager</url>
+					<url>http://gates.itigo.pl:8080/manager/html</url>
 					<server>gates</server>
+					<path>/blog</path>
 				</configuration>
 			</plugin>
 		</plugins>
