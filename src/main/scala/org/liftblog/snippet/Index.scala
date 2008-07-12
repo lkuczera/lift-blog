@@ -24,7 +24,8 @@ class Index {
 	 * Renders posts list.
 	 */
 	def post(in: NodeSeq): NodeSeq = {
-		def shortenText(text: String) = if(text.length < strLength) text else text.substring(0, strLength)+" ..."
+		// FIXME - Bug with malformed xml when post is cut down
+		def shortenText(text: String) = text //if(text.length < strLength) text else text.substring(0, strLength)+" ..."
 		Post.findAll(OrderBy(Post.date, Descending)).flatMap(post => bind("post",in, 
 				"title"->post.title, 
 				"text" -> <xml:group>{Unparsed(shortenText(post.text))}</xml:group>,
