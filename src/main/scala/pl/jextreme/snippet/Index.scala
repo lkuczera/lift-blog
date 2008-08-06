@@ -16,7 +16,7 @@ import _root_.net.liftweb.http.js.{JE,JsCmd,JsCmds,Jx,jquery}
 import JsCmds._ // For implicits
 import JE._
 import net.liftweb.http.js.jquery.JqJsCmds._ 
-
+import net.liftweb.textile.TextileParser
 
 class Index {
 	private val strLength = 512
@@ -24,9 +24,10 @@ class Index {
 	 * Renders posts list.
 	 */
 	def post(in: NodeSeq): NodeSeq = {
+		def shortenText(text: String) = if(text.length < strLength) text else text.substring(0, strLength)+" ..."
 		Post.findAll(OrderBy(Post.date, Descending)).flatMap(post => bind("post",in, 
 				"title"->post.title, 
-				"text" -> {if(post.text.length < strLength) post.text.get else post.text.substring(0, strLength)+" ..."},
+				"text" -> <xml:group>{Unparsed(shortenText(post.text))}</xml:group>,
 				"date" -> (new SimpleDateFormat(Const.format) format post.date.get),
 				"more" -> SHtml.link("/details.html",()=>Index.postidVar(post.id),Text("Read more"), ("class","readmore")),
 				"comments" -> SHtml.link("/details.html", 
@@ -37,9 +38,7 @@ class Index {
 				"edit" -> (if(User.loggedIn_?) SHtml.link("/edit", ()=>Index.postidVar(post.id), Text("Edit"), ("class","readmore"))
 						   else Text(""))
 				)
-				
 		)
-		
 	}
 	
 	
@@ -67,7 +66,7 @@ class Index {
 	def comments(in: NodeSeq): NodeSeq = {
 		Comment.findAll(By(Comment.postid,Index.postid)).flatMap(comment =>
 			bind("comment", in, "author" -> <a href={comment.website}> {comment.author}</a>,
-					"text" -> comment.text,
+					"text" -> <xml:group>{Unparsed(comment.text)}</xml:group>,
 					"date" -> (new SimpleDateFormat("E d MMM, HH:mm") format comment.date.get))
 		) 
 	}
@@ -82,15 +81,15 @@ class Index {
 		// new-comment is element on page inside 
 		def onSubmit = {
 				val now = new java.util.Date
-				val c = Comment.create.author(author).text(text).postid(Index.postid).date(now).website(website)
+				val html = TextileParser.toHtml(text, false).toString
+				val c = Comment.create.author(author).text(html).postid(Index.postid).date(now).website(website)
 				c.validate
 				c.save
 				AppendHtml("new-comment",(<p class="post-footer align-left">
-			 <p style="margin-bottom: 5px; font-weight: bold;"><a href={website}> {author}</a> said...<br/></p>	
-				<p>{text}</p>
-				<br/><br/>		
-    			<p>{now}</p> 					
-			</p>))
+				 <p style="margin-bottom: 5px; font-weight: bold;"><a href={website}> {author}</a> said...<br/></p>	
+					<p>{Unparsed(html)}</p>
+	    			<p>{now}</p> 					
+	    		</p>))
 			
 		}
 		

@@ -6,6 +6,7 @@ import _root_.net.liftweb.common._
 import _root_.net.liftweb.util.Helpers
 import net.liftweb.http._
 import Helpers._
+import net.liftweb.textile.TextileParser
 class Posting {
 	
 	/**
@@ -22,8 +23,8 @@ class Posting {
 		def submit() = {
 			if(title=="") S.error("Title musn't be empty") 
 			else {
-				println(new java.util.Date)
-				Post.create.date(new java.util.Date).text(text).title(title).save
+				val html = TextileParser.toHtml(text, false).toString
+				Post.create.date(new java.util.Date).text(html).title(title).save
 				S.redirectTo("/index")
 			}
 		}
@@ -44,7 +45,8 @@ class Posting {
 		def submit() = {
 			if(title=="") S.error("Title musn't be empty") 
 			else {
-				post.open_!.title(title).text(text).save
+				val html = TextileParser.toHtml(text, false).toString
+				post.open_!.title(title).text(html).save
 				S.redirectTo("/index")
 			}
 		}
