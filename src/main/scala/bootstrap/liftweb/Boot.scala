@@ -16,7 +16,7 @@ import org.apache.commons.io.IOUtils
  * A class that's instantiated early and run.  It allows the application
  * to modify lift's environment
  */
-class Boot {
+class Boot extends Logger {
   def boot {
     if (!DB.jndiJdbcConnAvailable_?) {
       val vendor = 
@@ -33,10 +33,11 @@ class Boot {
     // create default user if none is present
     if(DB.runQuery("select * from users")._2.isEmpty) {
 	    val res = this.getClass.getResourceAsStream("/basic.sql");
-	    println("Crating basic database from classpath://basic.sql;")
-	    DB.use(DefaultConnectionIdentifier)( con => DB.prepareStatement(IOUtils.toString(res), con) { stmt => stmt.execute})
-    }    
-    
+	    info("Crating basic database from classpath://basic.sql;")
+	    // execute basic.sql script
+	    DB.use(DefaultConnectionIdentifier)(con => 
+	    	DB.prepareStatement(IOUtils.toString(res), con) { stmt => stmt.execute})
+    }
     
     
     // where to search snippet
@@ -77,7 +78,7 @@ class Boot {
     LiftRules.liftRequest.append { 
     	case Req("static" :: _, _, _) => false 
     } 
-    LiftRules.useXhtmlMimeType = true 
+//    LiftRules.useXhtmlMimeType = true 
     
     LiftRules.rewrite.append {
     	case RewriteRequest(ParsePath("feed" :: Nil,_,_,_),_,_)  => RewriteResponse(List("RssView","feed")) 

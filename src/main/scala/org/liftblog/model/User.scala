@@ -18,7 +18,7 @@ object User extends User with MetaMegaProtoUser[User] {
   override def fieldOrder = List(id, firstName, lastName, email,
   locale, timezone, password, textArea)
   // disables automatic sign up form
-//  override def createUserMenuLoc = Empty
+  override def createUserMenuLoc = Empty
   // comment this line out to require email validations
   override def skipEmailValidation = true
   // redefine login form for nice formatting

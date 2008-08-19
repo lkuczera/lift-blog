@@ -6,7 +6,8 @@ import Assert._
 import _root_.scala.xml.XML
 import _root_.net.liftweb.util._
 import _root_.net.liftweb.common._
-
+import java.io.FileFilter
+    
 object AppTest {
   def suite: Test = {
     val suite = new TestSuite(classOf[AppTest])
@@ -43,16 +44,19 @@ class AppTest extends TestCase("app") {
 
     def handledXHtml(file: String) =
       file.endsWith(".html") || file.endsWith(".htm") || file.endsWith(".xhtml")
-
-    def wellFormed(file: File) {
+    
+    
+    
+    def wellFormed(file: File, fileFilter: FileFilter) {
       if (file.isDirectory)
-        for (f <- file.listFiles) wellFormed(f)
+        for (f <- file.listFiles(fileFilter)) wellFormed(f, fileFilter)
 
       if (file.isFile && handledXml(file.getName)) {
         try {
           XML.loadFile(file)
         } catch {
           case e: _root_.org.xml.sax.SAXParseException => failed = file :: failed
+          case e: Exception => println("Unexpected exception parsing: "+file); throw e
         }
       }
       if (file.isFile && handledXHtml(file.getName)) {
@@ -62,8 +66,11 @@ class AppTest extends TestCase("app") {
         }
       }
     }
-
-    wellFormed(new File("src/main/webapp"))
+  
+    val staticFilter = new FileFilter {
+    	def accept(file: File): Boolean = !file.getAbsolutePath.contains("static");
+    }
+    wellFormed(new File("src/main/webapp"), staticFilter)
 
     val numFails = failed.size
     if (numFails > 0) {

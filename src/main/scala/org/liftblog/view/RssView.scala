@@ -57,8 +57,10 @@ object RssView extends Logger {
 	lazy val props = {
 		// ugly imperative style
 		val props = new Properties
-		try{ props.load(getClass.getResourceAsStream("/rss.properties"))} catch  {
-			case e: Exception => error("RSS feed accessed but no rss.properties found on the classpath")
+		try{ props.load(getClass.getResourceAsStream("/rss.properties"))} 
+		catch  {
+			case e: Exception => error(
+			  "RSS feed accessed but no rss.properties found on the classpath")
 		}
 		props
 	}
