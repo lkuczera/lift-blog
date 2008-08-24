@@ -81,7 +81,11 @@ class Boot extends Logger {
 //    LiftRules.useXhtmlMimeType = true 
     
     LiftRules.rewrite.append {
-    	case RewriteRequest(ParsePath("feed" :: Nil,_,_,_),_,_)  => RewriteResponse(List("RssView","feed")) 
+    	case RewriteRequest(ParsePath("feed" :: Nil,_,_,_),_,_)  => RewriteResponse(List("RssView","feed"))
+    	case RewriteRequest(p @ ParsePath(path ,"html",_, false),GetRequest,_) if(!path.isEmpty) => {
+    		RewriteResponse(List("details"), Map("title" -> path.last)) 
+    	}
+    		
     }
   }
 

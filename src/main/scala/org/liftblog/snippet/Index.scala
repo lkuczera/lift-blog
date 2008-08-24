@@ -27,11 +27,11 @@ class Index {
 		// FIXME - Bug with malformed xml when post is cut down
 		def shortenText(text: String) = text //if(text.length < strLength) text else text.substring(0, strLength)+" ..."
 		Post.findAll(OrderBy(Post.date, Descending)).flatMap(post => bind("post",in, 
-				"title"->post.title, 
+				"title"-> <a href={urlify(post)}>{post.title}</a>, 
 				"text" -> <xml:group>{Unparsed(shortenText(post.text))}</xml:group>,
 				"date" -> (new SimpleDateFormat(Const.format) format post.date.get),
-				"more" -> SHtml.link("/details.html",()=>Index.postidVar(post.id),Text("Read more"), ("class","readmore")),
-				"comments" -> SHtml.link("/details.html", 
+				"more" -> <a href={urlify(post)} class="readmore">Read more</a> ,
+				"comments" -> SHtml.link("/details", 
 						()=>Index.postidVar(post.id), { 
 						// get number of comments for current post and bind html link in the view
 						val comments = (Comment findAll By(Comment.postid, post.id)).length
@@ -42,7 +42,7 @@ class Index {
 		)
 	}
 	
-	
+	def urlify(post: Post) = post.title+".html"
 	
 	/**
 	 * Renders post in details.
@@ -50,14 +50,15 @@ class Index {
 	 * @return
 	 */
 	def show(in: NodeSeq): NodeSeq = {
-		Post.find(Index.postid) match {
+		val postTitle = S.param("title") openOr S.redirectTo("/404.html")
+		Post.find(By(Post.title, postTitle)) match {
 			case Full(post) => bind("post",in, 
 				"title"->post.title, 
 				"text" -> <xml:group>{Unparsed(post.text)}</xml:group>,
 				"date" -> (new SimpleDateFormat(Const.format) format post.date.get))
 				
 			case Empty => Text("No such post")
-			case Failure(_,_,_) => S.redirectTo("/failure.html")
+			case Failure(_,_,_) => S.redirectTo("/404.html")
 		}
 	}
 	
