@@ -1,0 +1,31 @@
+<lift:surround with="coolwater" at="content">
+    	<lift:Index.show>
+    	<h2><post:title>Post title goes here</post:title></h2>
+		<p><span><post:date/></span> </p>
+		<p>
+			<post:text>Post content here</post:text></p>
+
+    	</lift:Index.show>
+    	
+    	<lift:Index.comments>
+    		<p class="post-footer align-left">
+			 <div style="margin-bottom: 5px; font-weight: bold;"><comment:author/> said...<br/></div>	
+				<comment:text/>
+				<br/><br/>		
+    			<comment:date/> 					
+			</p>
+    	</lift:Index.comments>
+    	<div id="new-comment" />
+    	
+    	<lift:Index.addComment>
+    	<p> 
+    		<label>Name</label>
+    		<comm:author/>
+    		<label>Your Website</label>
+    		<comm:website/>
+    		<label>Your Comment</label>
+    		<comm:text/><br/>
+    		<comm:submit/>
+    	</p>
+    	</lift:Index.addComment>
+</lift:surround>
