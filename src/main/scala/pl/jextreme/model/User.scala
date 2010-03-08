@@ -12,7 +12,7 @@ import scala.xml.Elem
  */
 object User extends User with MetaMegaProtoUser[User] {
   override def dbTableName = "users" // define the DB table name
-  override def screenWrap = Full(<lift:surround with="default" at="content">
+  override def screenWrap = Full(<lift:surround with="coolwater" at="content">
 			       <lift:bind /></lift:surround>)
   // define the order fields will appear in forms and output
   override def fieldOrder = List(id, firstName, lastName, email,
@@ -23,8 +23,7 @@ object User extends User with MetaMegaProtoUser[User] {
   override def skipEmailValidation = true
   // redefine login form for nice formatting
   override def loginXhtml=
-	<lift:surround with="coolwater" at="content">
-		  <form method="post" action={S.uri}>
+	 <form method="post" action={S.uri}>
 		  <div style="margin-bottom: 5px; margin-left: 5px;"><strong>{S.??("log.in")}</strong></div>
 		  <div style="float: left; line-height: 2.5em;margin-left: 5px; margin-right: 20px;">
 		  	{S.??("email.address")}<br/>
@@ -37,11 +36,11 @@ object User extends User with MetaMegaProtoUser[User] {
           	<user:submit />  
           </div>
      </form>
-	</lift:surround>
+	
   override def signupXhtml(user:User)=
-	<lift:surround with="coolwater" at="content">
+	
 		{super.signupXhtml(user)}
-	</lift:surround>
+	
 }
 
 /**
