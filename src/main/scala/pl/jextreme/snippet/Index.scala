@@ -50,11 +50,10 @@ class Index {
 	 * @return
 	 */
 	def show(in: NodeSeq): NodeSeq = {
-		println("in details show")
 		Post.find(Index.postid) match {
 			case Full(post) => bind("post",in, 
 				"title"->post.title, 
-				"text" -> post.text,
+				"text" -> <xml:group>{Unparsed(post.text)}</xml:group>,
 				"date" -> (new SimpleDateFormat(Const.format) format post.date.get))
 				
 			case Empty => Text("No such post")

@@ -1,1 +1,1 @@
-empty
+Simple blogging app. See demo: http://www.acidbits.org/lift-blog
