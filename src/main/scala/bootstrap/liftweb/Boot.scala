@@ -39,8 +39,8 @@ class Boot {
 
     // Build SiteMap
     val entries = Menu(Loc("Home", List("index"), "Home")) ::
-//    Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
-//	     "Static Content")) ::
+    Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
+	     "Static Content", Hidden)) ::
     Menu(Loc("Post",List("posting"),"Post to blog", loggedIn)) ::
     Menu(Loc("Edit",List("edit"),"Edit post", loggedIn, Hidden)) ::
     Menu(Loc("Details", List("details"), "Details", Hidden)) ::
