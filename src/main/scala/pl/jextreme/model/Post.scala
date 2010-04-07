@@ -11,6 +11,6 @@ class Post extends LongKeyedMapper[Post] with IdPK  {
 	object userid extends MappedLongForeignKey(this,User)
 }
 
-object Post extends Post with LongKeyedMetaMapper[Post] with CRUDify[Long,Post]  {
+object Post extends Post with LongKeyedMetaMapper[Post]  {
 	
 }

@@ -112,6 +112,7 @@
           <scanIntervalSeconds>0</scanIntervalSeconds>
         </configuration>
       </plugin>
+      <!-- 
       <plugin>
         <groupId>net.sf.alchim</groupId>
         <artifactId>yuicompressor-maven-plugin</artifactId>
@@ -127,6 +128,7 @@
           <nosuffix>true</nosuffix>
         </configuration>
       </plugin>
+       -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-idea-plugin</artifactId>

@@ -1,8 +1,20 @@
 <lift:surround with="coolwater" at="content">
+	<head>
+	<script type="text/javascript" src="/static/ckeditor/ckeditor.js"></script>
+		<script type="text/javascript" src="/static/wymeditor/jquery/jquery.js"> </script>
+		<script type="text/javascript" src="/static/wymeditor/wymeditor/jquery.wymeditor.min.js"></script>
+		<script>
+		jQuery(function() {
+		    jQuery('.wymeditor').wymeditor({
+		    	skinPath: '/static/wymeditor/wymeditor/skins/default/',
+		    	jQueryPath: '/classpath/jquery.js'
+			    });
+		});
+		</script>
+	</head>
 	<lift:Posting.add form="POST">
 		<h2>Create new entry</h2>
 		<p>
-				
 		Title:<br/>
 		<post:title /><br/>
 		Text<br/>

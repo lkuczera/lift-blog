@@ -38,14 +38,12 @@ class Boot {
               () => RedirectResponse("/user_mgt/login"))
 
     // Build SiteMap
-    val entries = Menu(Loc("Home", List("index"), "Home")) ::
-    Menu(Loc("Static", Link(List("static"), true, "/static/index"), 
-	     "Static Content", Hidden)) ::
-    Menu(Loc("Post",List("posting"),"Post to blog", loggedIn)) ::
+    val entries = Menu(Loc("Home", List("index"), "Home")) ::  Menu(Loc("Post",List("posting"),"Post to blog", loggedIn)) ::
     Menu(Loc("Edit",List("edit"),"Edit post", loggedIn, Hidden)) ::
     Menu(Loc("Details", List("details"), "Details", Hidden)) ::
     User.sitemap 
-   // ::: Post.menus ::: Comment.menus
+//    ::: Post.menus 
+    //::: Comment.menus
 
     LiftRules.setSiteMap(SiteMap(entries:_*))
 
@@ -66,6 +64,13 @@ class Boot {
     LiftRules.loggedInTest = Full(() => User.loggedIn_?)
 
     S.addAround(DB.buildLoanWrapper)
+    /** for tinyMCE */
+    LiftRules.passNotFoundToChain = true 
+    LiftRules.liftRequest.append { 
+    	case Req("static" :: _, _, _) => false 
+    } 
+    LiftRules.useXhtmlMimeType = false 
+    
   }
 
   /**

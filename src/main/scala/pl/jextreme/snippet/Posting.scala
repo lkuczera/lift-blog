@@ -30,7 +30,7 @@ class Posting {
 		bind("post",in,
 				"title" -> SHtml.text("", parm => title=parm, ("size","55")),
 				"tags" -> SHtml.text("", parm => tags=parm),
-				"text" -> SHtml.textarea("", parm => text=parm),
+				"text" -> SHtml.textarea("", parm => text=parm, ("class", "wymeditor")),
 				"submit" -> SHtml.submit("Submit", submit)
 			)
 	}

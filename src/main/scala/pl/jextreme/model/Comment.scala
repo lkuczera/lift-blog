@@ -10,4 +10,4 @@ class Comment  extends LongKeyedMapper[Comment] with IdPK {
 	object date extends MappedDateTime(this)
 }
 
-object Comment extends Comment with LongKeyedMetaMapper[Comment] with CRUDify[Long,Comment] 
+object Comment extends Comment with LongKeyedMetaMapper[Comment]  
