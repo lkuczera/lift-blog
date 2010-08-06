@@ -56,9 +56,7 @@ class Posting {
 					"submit" -> SHtml.submit("Save", submit)
 					)
 			case Empty => S.error("Post to edit not found"); S.redirectTo("/index")
+			case _ => S.error("Error occured"); S.redirectTo("/index")
 		}
-		
-		
-		
 	}
 }

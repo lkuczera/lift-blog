@@ -86,10 +86,10 @@ class Index {
 				c.validate
 				c.save
 				AppendHtml("new-comment",(<p class="post-footer align-left">
-			 <div style="margin-bottom: 5px; font-weight: bold;"><a href={website}> {author}</a> said...<br/></div>	
-				{text}
+			 <p style="margin-bottom: 5px; font-weight: bold;"><a href={website}> {author}</a> said...<br/></p>	
+				<p>{text}</p>
 				<br/><br/>		
-    			{now} 					
+    			<p>{now}</p> 					
 			</p>))
 			
 		}
