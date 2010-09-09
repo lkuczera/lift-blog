@@ -12,18 +12,16 @@
 -->
 <link rel="stylesheet" href="/images/CoolWater.css" type="text/css" />
 <link rel="stylesheet" href="/css/coolwater-tweaks.css" type="text/css" />
-<script id="jquery" src="/classpath/jquery.js" type="text/javascript"/>
+<script id="jquery" src="/static/jquery/jquery-1.4.2.min.js" type="text/javascript" />
 <script id="json" src="/classpath/json.js" type="text/javascript"/>
-<link rel="stylesheet" title="Default" href="/static/highlight/styles/default.css" type="text/css" />
-<script type="text/javascript" src="/static/highlight/highlight.js"></script>
-<script type="text/javascript" src="/static/highlight/languages/scala.js"></script>
 
-    <script type="text/javascript">
-    $(document).ready(function() {
-    	$('pre').each(function(i, e) {
-        	hljs.highlightBlock(e)});
-    })
-    </script>
+<link rel="stylesheet" title="Default" href="/static/highlight/styles/default.css" type="text/css" />
+<script type="text/javascript" src="/static/highlight/highlight.pack.js"></script>
+  <script type="text/javascript">
+  hljs.tabReplace = '    ';
+  hljs.initHighlightingOnLoad();
+  </script>
+
 <title>kukem's blog</title>
 
 </head>
@@ -98,6 +96,7 @@
 
 <!-- wrap ends here -->
 </div>
+
 
 </body>
 </html>

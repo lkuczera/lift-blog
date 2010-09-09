@@ -50,6 +50,7 @@ class Boot extends Logger {
     val entries = Menu(Loc("Home", List("index"), "Home")) ::  Menu(Loc("Post",List("posting"),"Post to blog", loggedIn)) ::
     Menu(Loc("Edit",List("edit"),"Edit post", loggedIn, Hidden)) ::
     Menu(Loc("Details", List("details"), "Details", Hidden)) ::
+    Menu(Loc("highlight", List("highlight"), "highlight", Hidden)) ::
     Menu(Loc("feed", List("feed"), "feed", Hidden)) ::
     Menu(Loc("RssView", List("RssView", "feed"), "RssView", Hidden)) ::
     User.sitemap 
@@ -73,20 +74,30 @@ class Boot extends Logger {
     LiftRules.loggedInTest = Full(() => User.loggedIn_?)
 
     S.addAround(DB.buildLoanWrapper)
-    /** for tinyMCE */
+    /** for H2 console  */
     LiftRules.passNotFoundToChain = true 
     LiftRules.liftRequest.append { 
     	case Req("static" :: _, _, _) => false 
     } 
-//    LiftRules.useXhtmlMimeType = true 
-    
+    LiftRules.useXhtmlMimeType = false
+//    LiftRules.xhtmlValidator = Empty
+//    LiftRules.autoIncludeAjax = x => false
+//    LiftRules.autoIncludeComet = x => false
+    implicit def string2dateString(str: String): DateString = DateString(str)
     LiftRules.rewrite.append {
     	case RewriteRequest(ParsePath("feed" :: Nil,_,_,_),_,_)  => RewriteResponse(List("RssView","feed"))
-    	case RewriteRequest(p @ ParsePath(path ,"html",_, false),GetRequest,_) if(!path.isEmpty) => {
-    		RewriteResponse(List("details"), Map("title" -> path.last)) 
-    	}
-    		
+    	case RewriteRequest(ParsePath(year :: month :: post :: Nil,_,_, false),GetRequest,_) 
+    		if(year.isYear &&  month.isMonth) => 
+    			RewriteResponse(List("details"), Map("title" -> post, month -> month, year -> year)) 
     }
+    
+    // 404.html handler
+    LiftRules.uriNotFound.prepend(NamedPF("404handler"){
+      case (r @ req,failure) =>
+      	println("Not found request:" + r)
+        NotFoundAsTemplate(ParsePath(List("404"),"html",false,false))
+    })
+
   }
 
   /**
@@ -95,4 +106,10 @@ class Boot extends Logger {
   private def makeUtf8(req: HTTPRequest) {
     req.setCharacterEncoding("UTF-8")
   }
+}
+
+case class DateString(val str: String) {
+	implicit def string2dateString(str: String): DateString = DateString(str)
+	def isYear = str matches """\d\d\d\d"""
+    def isMonth = str matches """\d\d"""
 }

@@ -42,7 +42,17 @@ class Index {
 		)
 	}
 	
-	def urlify(post: Post) = post.title+".html"
+	implicit def string2slash(str: String) = new SlashString(str)
+	case class SlashString(val str: String) {
+		def /(other: String) = str + "/" + other
+	}
+	def urlify(post: Post) = {
+		val date = post.date.is
+		val year = (date.getYear+1900).toString
+		val month = date.getMonth+1
+		val monthStr = if(month >9) month.toString else ("0"+month)
+		year / monthStr / post.title
+	}
 	
 	/**
 	 * Renders post in details.
@@ -51,6 +61,7 @@ class Index {
 	 */
 	def show(in: NodeSeq): NodeSeq = {
 		val postTitle = S.param("title") openOr S.redirectTo("/404.html")
+		
 		Post.find(By(Post.title, postTitle)) match {
 			case Full(post) => bind("post",in, 
 				"title"->post.title, 
