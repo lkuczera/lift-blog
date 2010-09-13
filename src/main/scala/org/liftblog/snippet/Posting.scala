@@ -36,7 +36,7 @@ class Posting {
 		bind("post",in,
 				"title" -> SHtml.text("", parm => title=parm, ("size","55")),
 				"tags" -> SHtml.text("", parm => tags=parm),
-				"text" -> SHtml.textarea("", parm => text=parm, ("class", "wymeditor")),
+				"text" -> SHtml.textarea("", parm => text=parm, ("id", "markitup")),
 				"submit" -> SHtml.submit("Submit", submit)
 			)
 	}
@@ -59,7 +59,7 @@ class Posting {
 			case Full(p) => bind("post",in,
 					"title" -> SHtml.text(p.title, parm => title=parm, ("size","55")),
 					"tags" -> SHtml.text("", parm => tags=parm),
-					"text" -> SHtml.textarea(p.text, parm => text=parm),
+					"text" -> SHtml.textarea(p.text, parm => text=parm, ("id", "markitup")),
 					"submit" -> SHtml.submit("Save", submit)
 					)
 			case Empty => S.error("Post to edit not found"); S.redirectTo("/index")
