@@ -16,6 +16,11 @@ class Posting {
 	 */
 	def assocTags(postid: Long, tags: String) = {}
 	
+	/** 
+	 * Creates new post.
+	 * @param in
+	 * @return
+	 */
 	def add(in: NodeSeq): NodeSeq = {
 		var title = ""
 		var text = ""
@@ -23,7 +28,7 @@ class Posting {
 		def submit() = {
 			if(title=="") S.error("Title musn't be empty") 
 			else {
-				val html = TextileParser.toHtml(text, false).toString
+				val html =  text //TextileParser.toHtml(text, false).toString
 				Post.create.date(new java.util.Date).text(html).title(title).save
 				S.redirectTo("/index")
 			}
@@ -45,7 +50,7 @@ class Posting {
 		def submit() = {
 			if(title=="") S.error("Title musn't be empty") 
 			else {
-				val html = TextileParser.toHtml(text, false).toString
+				val html = text //TextileParser.toHtml(text, false).toString
 				post.open_!.title(title).text(html).save
 				S.redirectTo("/index")
 			}
