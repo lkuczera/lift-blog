@@ -170,7 +170,7 @@
 				<configuration>
 					<url>http://gates.itigo.pl:8080/manager/html</url>
 					<server>gates</server>
-					<path>/blog</path>
+					<path>/lift-blog</path>
 				</configuration>
 			</plugin>
 		</plugins>
