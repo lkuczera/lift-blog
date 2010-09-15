@@ -1,0 +1,4 @@
+db.driver=com.mysql.jdbc.Driver
+db.url=jdbc:mysql://localhost/winshMeDB
+db.user=root
+db.password=winshMe112

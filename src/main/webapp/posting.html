@@ -1,4 +1,4 @@
-<lift:surround with="coolwater" at="content">
+<lift:surround with="default" at="content">
 	<head>
 <script type="text/javascript" src="/static/markitup/markitup/jquery.markitup.js"></script> 
 <script type="text/javascript" src="/static/markitup/markitup/sets/default/set.js"></script>
@@ -23,4 +23,15 @@
 		<post:submit />
 		</p>
 	</lift:Posting.add>
+	<h3>Examples</h3>
+	<h4>Add source code</h4>
+	<p>
+
+&lt;pre&gt;&lt;code&gt;def fibonacci( n: Int): Int = n match {<br/>
+  case 0 => 0<br/>
+  case 1 => 1<br/>
+  case _ => fibonacci(n-1) + fibonacci(n-2)<br/>
+}&lt;/code&gt;&lt;/pre&gt;
+
+	</p>
 </lift:surround>

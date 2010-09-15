@@ -46,15 +46,17 @@ class Boot extends Logger {
     val loggedIn = If(() => User.loggedIn_?,
               () => RedirectResponse("/user_mgt/login"))
 
-    // Build SiteMap
-    val entries = Menu(Loc("Home", List("index"), "Home")) ::  Menu(Loc("Post",List("posting"),"Post to blog", loggedIn)) ::
+    // Build SiteMap            
+    val entries = 
+    Menu(Loc("Home", List("index"), "Home")) ::  
+    Menu(Loc("Post",List("posting"),"Post to blog", loggedIn)) ::
     Menu(Loc("Edit",List("edit"),"Edit post", loggedIn, Hidden)) ::
     Menu(Loc("Details", List("details"), "Details", Hidden)) ::
     Menu(Loc("highlight", List("highlight"), "highlight", Hidden)) ::
     Menu(Loc("feed", List("feed"), "feed", Hidden)) ::
     Menu(Loc("RssView", List("RssView", "feed"), "RssView", Hidden)) ::
-    User.sitemap 
-
+    User.sitemap
+//User.sitemap 
     LiftRules.setSiteMap(SiteMap(entries:_*))
 
     /*
