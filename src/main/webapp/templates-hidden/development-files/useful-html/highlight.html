@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:lift="http://liftweb.net/">
+<head>
+<!-- 
+-->
+<script id="jquery" src="/static/jquery/jquery-1.4.2.min.js" type="text/javascript"/>
+<script id="json" src="/classpath/json.js" type="text/javascript"/>
+<script type="text/javascript" src="/static/markitup/markitup/jquery.markitup.js"></script> 
+<script type="text/javascript" src="/static/markitup/markitup/sets/default/set.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/markitup/markitup/skins/markitup/style.css" />
+<link rel="stylesheet" type="text/css" href="/static/markitup/markitup/sets/default/style.css" />
+
+<script type="text/javascript" >
+$(document).ready(function() {
+   $('#myArea').markItUp(mySettings);
+});
+</script>
+<link rel="stylesheet" title="Default" href="/static/highlight/styles/default.css" type="text/css" />
+<script type="text/javascript" src="/static/highlight/highlight.pack.js"></script>
+  <script type="text/javascript">
+  hljs.tabReplace = '    ';
+  hljs.initHighlightingOnLoad();
+  </script>
+
+</head>
+<body>
+
+<textarea id="myArea" rows="20" cols="60"></textarea>
+
+
+<h2>Scala</h2>
+<pre><code>
+    	
+object abstractTypes extends Application {
+  abstract class SeqBuffer {
+    type T; val element: Seq[T]; def length = element.length
+  }
+}
+
+/** Turn command line arguments to uppercase */
+object Main {
+  def main(args: Array[String]) {
+    val res = for (a &lt;- args) yield a.toUpperCase
+    println("Arguments: " + res.toString)
+  }
+}
+
+/** Maps are easy to use in Scala. */
+object Maps {
+  val colors = Map("red" -> 0xFF0000,
+                   "turquoise" -> 0x00FFFF,
+                   "black" -> 0x000000,
+                   "orange" -> 0xFF8040,
+                   "brown" -> 0x804000)
+  def main(args: Array[String]) {
+    for (name &lt;- args) println(
+      colors.get(name) match {
+        case Some(code) =>
+          name + " has code: " + code
+        case None =&gt;
+          "Unknown color: " + name
+      }
+    )
+  }
+}
+
+</code></pre>
+<br></br>
+<br/>
+
+<script src="http://gist.github.com/570857.js?file=gistfile1.scala"></script>
+
+
+<h2>JavaScript</h2>
+
+<pre><code>$(document).ready(function() {
+    	$('pre').each(function(i, e) {
+        	hljs.highlightBlock(e)});
+    })</code></pre>
+
+
+</body>
+</html>
