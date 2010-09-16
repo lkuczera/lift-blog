@@ -26,16 +26,15 @@ class Index {
 	def post(in: NodeSeq): NodeSeq = {
 		// FIXME - Bug with malformed xml when post is cut down
 		def shortenText(text: String) = text //if(text.length < strLength) text else text.substring(0, strLength)+" ..."
+		//get number of comments for current post and bind html link in the view
+		def commentsText(post: Post) = {val comments = (Comment findAll By(Comment.postid, post.id)).length
+						Text("Comments(%d)".format((comments)))}
 		Post.findAll(OrderBy(Post.date, Descending)).flatMap(post => bind("post",in, 
 				"title"-> <a href={urlify(post)}>{post.title}</a>, 
 				"text" -> <xml:group>{Unparsed(shortenText(post.text))}</xml:group>,
 				"date" -> (new SimpleDateFormat(Const.format) format post.date.get),
 				"more" -> <a href={urlify(post)} class="readmore">Read more</a> ,
-				"comments" -> SHtml.link("/details", 
-						()=>Index.postidVar(post.id), { 
-						// get number of comments for current post and bind html link in the view
-						val comments = (Comment findAll By(Comment.postid, post.id)).length
-						Text("Comments(%d)".format((comments)))},  ("class","comments")),
+				"comments" -> <a href={urlify(post)+"#comments"} class="comments">{commentsText(post)}</a>,
 				"edit" -> (if(User.loggedIn_?) SHtml.link("/edit", ()=>Index.postidVar(post.id), Text("Edit"), ("class","readmore"))
 						   else Text(""))
 				)
@@ -77,7 +76,9 @@ class Index {
 	 * Binds comments for related post.
 	 */
 	def comments(in: NodeSeq): NodeSeq = {
-		Comment.findAll(By(Comment.postid,Index.postid)).flatMap(comment =>
+		val postTitle = S.param("title") openOr S.redirectTo("/404.html")
+		val postid = Post find(By (Post.title, postTitle)) openOr S.redirectTo("/404.html")
+		Comment.findAll(By(Comment.postid,postid)).flatMap(comment =>
 			bind("comment", in, "author" -> <a href={comment.website}> {comment.author}</a>,
 					"text" -> <xml:group>{Unparsed(comment.text)}</xml:group>,
 					"date" -> (new SimpleDateFormat("E d MMM, HH:mm") format comment.date.get))
