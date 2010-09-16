@@ -4,6 +4,9 @@ package model {
 import _root_.net.liftweb.mapper._
 import _root_.net.liftweb.util._
 import _root_.net.liftweb.common._
+import _root_.net.liftweb.sitemap._
+import _root_.net.liftweb.sitemap.Loc._
+import Helpers._
 import net.liftweb.http.S
 import scala.xml.Elem
 
@@ -12,13 +15,13 @@ import scala.xml.Elem
  */
 object User extends User with MetaMegaProtoUser[User] {
   override def dbTableName = "users" // define the DB table name
-  override def screenWrap = Full(<lift:surround with="coolwater" at="content">
+  override def screenWrap = Full(<lift:surround with="default" at="content">
 			       <lift:bind /></lift:surround>)
   // define the order fields will appear in forms and output
   override def fieldOrder = List(id, firstName, lastName, email,
   locale, timezone, password, textArea)
   // disables automatic sign up form
-//  override def createUserMenuLoc = Empty
+  override def createUserMenuLoc = Empty
   // comment this line out to require email validations
   override def skipEmailValidation = true
   // redefine login form for nice formatting
@@ -36,7 +39,12 @@ object User extends User with MetaMegaProtoUser[User] {
           	<user:submit />  
           </div>
      </form>
-	
+		  	
+
+  override def loginMenuLocParams = Hidden::super.loginMenuLocParams
+  
+  override def lostPasswordMenuLocParams =Hidden::super.lostPasswordMenuLocParams
+  
   override def signupXhtml(user:User)=
 	
 		{super.signupXhtml(user)}

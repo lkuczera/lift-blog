@@ -16,6 +16,11 @@ class Posting {
 	 */
 	def assocTags(postid: Long, tags: String) = {}
 	
+	/** 
+	 * Creates new post.
+	 * @param in
+	 * @return
+	 */
 	def add(in: NodeSeq): NodeSeq = {
 		var title = ""
 		var text = ""
@@ -23,7 +28,7 @@ class Posting {
 		def submit() = {
 			if(title=="") S.error("Title musn't be empty") 
 			else {
-				val html = TextileParser.toHtml(text, false).toString
+				val html =  text //TextileParser.toHtml(text, false).toString
 				Post.create.date(new java.util.Date).text(html).title(title).save
 				S.redirectTo("/index")
 			}
@@ -31,7 +36,7 @@ class Posting {
 		bind("post",in,
 				"title" -> SHtml.text("", parm => title=parm, ("size","55")),
 				"tags" -> SHtml.text("", parm => tags=parm),
-				"text" -> SHtml.textarea("", parm => text=parm, ("class", "wymeditor")),
+				"text" -> SHtml.textarea("", parm => text=parm, ("id", "markitup")),
 				"submit" -> SHtml.submit("Submit", submit)
 			)
 	}
@@ -45,7 +50,7 @@ class Posting {
 		def submit() = {
 			if(title=="") S.error("Title musn't be empty") 
 			else {
-				val html = TextileParser.toHtml(text, false).toString
+				val html = text //TextileParser.toHtml(text, false).toString
 				post.open_!.title(title).text(html).save
 				S.redirectTo("/index")
 			}
@@ -54,7 +59,7 @@ class Posting {
 			case Full(p) => bind("post",in,
 					"title" -> SHtml.text(p.title, parm => title=parm, ("size","55")),
 					"tags" -> SHtml.text("", parm => tags=parm),
-					"text" -> SHtml.textarea(p.text, parm => text=parm),
+					"text" -> SHtml.textarea(p.text, parm => text=parm, ("id", "markitup")),
 					"submit" -> SHtml.submit("Save", submit)
 					)
 			case Empty => S.error("Post to edit not found"); S.redirectTo("/index")

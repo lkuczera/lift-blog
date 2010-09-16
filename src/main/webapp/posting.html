@@ -1,16 +1,17 @@
-<lift:surround with="coolwater" at="content">
+<lift:surround with="default" at="content">
 	<head>
-	<script type="text/javascript" src="/static/ckeditor/ckeditor.js"></script>
-		<script type="text/javascript" src="/static/wymeditor/jquery/jquery.js"> </script>
-		<script type="text/javascript" src="/static/wymeditor/wymeditor/jquery.wymeditor.min.js"></script>
-		<script>
-		jQuery(function() {
-		    jQuery('.wymeditor').wymeditor({
-		    	skinPath: '/static/wymeditor/wymeditor/skins/default/',
-		    	jQueryPath: '/classpath/jquery.js'
-			    });
-		});
-		</script>
+<script type="text/javascript" src="/static/markitup/markitup/jquery.markitup.js"></script> 
+<script type="text/javascript" src="/static/markitup/markitup/sets/default/set.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/markitup/markitup/skins/markitup/style.css" />
+<link rel="stylesheet" type="text/css" href="/static/markitup/markitup/sets/default/style.css" />
+
+<script type="text/javascript">
+	$(document).ready(function()	{
+		// Add markItUp! to your textarea in one line
+		// $('textarea').markItUp( { Settings }, { OptionalExtraSettings } );
+		$('#markitup').markItUp(mySettings);
+	});
+</script>
 	</head>
 	<lift:Posting.add form="POST">
 		<h2>Create new entry</h2>
@@ -22,4 +23,15 @@
 		<post:submit />
 		</p>
 	</lift:Posting.add>
+	<h3>Examples</h3>
+	<h4>Add source code</h4>
+	<p>
+
+&lt;pre&gt;&lt;code&gt;def fibonacci( n: Int): Int = n match {<br/>
+  case 0 => 0<br/>
+  case 1 => 1<br/>
+  case _ => fibonacci(n-1) + fibonacci(n-2)<br/>
+}&lt;/code&gt;&lt;/pre&gt;
+
+	</p>
 </lift:surround>

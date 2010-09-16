@@ -39,6 +39,11 @@
 
 	<dependencies>
 		<dependency>
+  			<groupId>mysql</groupId>
+  			<artifactId>mysql-connector-java</artifactId>
+  			<version>5.0.8</version>
+		</dependency>
+		<dependency>
 			<groupId>net.liftweb</groupId>
 			<artifactId>lift-mapper_2.8.0</artifactId>
 			<version>${lift.version}</version>
@@ -48,7 +53,11 @@
 			<artifactId>lift-textile_2.8.0</artifactId>
 			<version>${lift.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>8.4-701.jdbc4</version>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -166,7 +175,7 @@
 				<configuration>
 					<url>http://gates.itigo.pl:8080/manager/html</url>
 					<server>gates</server>
-					<path>/blog</path>
+					<path>/lift-blog</path>
 				</configuration>
 			</plugin>
 		</plugins>

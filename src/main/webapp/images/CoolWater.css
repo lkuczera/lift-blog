@@ -53,7 +53,7 @@ h3 {
 	color: #666666;
 }
 
-/* images */
+/* images */ 
 img {
 	background: #fff;
     border: 1px solid #E5E5E5;
@@ -70,7 +70,7 @@ ul, ol {
 	margin: 5px 15px;
 	padding: 0 25px;
 }
-
+/* */
 code {
   margin: 5px 0;
   padding: 15px;
@@ -78,10 +78,19 @@ code {
   display: block;
   overflow: auto;  
   font: 500 1em/1.5em 'Lucida Console', 'courier new', monospace ;
-  /* white-space: pre; */
+  
   border: 1px solid #E5F0FB;  
   background: #F4F8FD;
 }
+
+pre {
+  width: 90%;
+  overflow: auto;
+  padding: 0;
+  margin: 0;
+  margin-left: 20px;
+}
+
 acronym {
   cursor: help;
   border-bottom: 1px dotted #777;
