@@ -4,7 +4,7 @@ import scala.xml.NodeSeq
 import http._
 import common._
 import util.Helpers._
-import java.util.Properties
+//import java.util.Properties
 import org.liftblog.model._
 import mapper._
 class RssView extends LiftView  {
@@ -45,16 +45,16 @@ object RssView extends Logger {
 	// renders whole rss provided items and static properties
 	def rssxml(items: NodeSeq) = <rss version="2.0">
 	<channel>
-		<title>{props.getProperty("title")}</title>
-			<description>{props.getProperty("descritpion")}</description>
-			<link>{props.getProperty("link")}</link>
+		<title>{Property.title.value /*props.getProperty("title")*/}</title>
+			<description>{Property.rssDescription.value/*props.getProperty("descritpion")*/}</description>
+			<link>{Property.address.value/*props.getProperty("link")*/}</link>
 			<lastBuildDate><rss:lastBuildDate /></lastBuildDate>
 			<pubDate>Tue, 29 Aug 2006 09:00:00 -0400</pubDate>
 			{items}
 	</channel>
 </rss>
 
-	lazy val props = {
+	/*lazy val props = {
 		// ugly imperative style
 		val props = new Properties
 		try{ props.load(getClass.getResourceAsStream("/rss.properties"))} 
@@ -63,5 +63,5 @@ object RssView extends Logger {
 			  "RSS feed accessed but no rss.properties found on the classpath")
 		}
 		props
-	}
+	}*/
 }

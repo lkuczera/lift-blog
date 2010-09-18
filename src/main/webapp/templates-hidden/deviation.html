@@ -14,8 +14,6 @@ Released   : 20100328
 
 <head>
 
-	<title>Deviation   by Free CSS Templates</title>
-
 	<link href="/css/deviation.css" rel="stylesheet" type="text/css" media="screen" />
 
 </head>
@@ -25,8 +23,8 @@ Released   : 20100328
 <div id="wrapper">
 	<div id="header">
 		<div id="logo">
-			<h1><a href="#">Deviation   </a></h1>
-			<p> design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a></p>
+			<h1><lift:Properties.titleLink/></h1>
+			<p> <lift:Properties.subtitle/></p>
 		</div>
 	</div>
 	<!-- end #header -->
@@ -145,7 +143,7 @@ Released   : 20100328
 	<!-- end #page -->
 </div>
 	<div id="footer">
-		<p><a href="/user_mgt/login">Admin</a> | Copyright (c) 2008 Sitename.com. All rights reserved. Design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>
+		<p><a href="/user_mgt/login">Admin</a> | <lift:Properties.copyrightNote/> |. Design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>
 	</div>
 	<!-- end #footer -->
 </body>

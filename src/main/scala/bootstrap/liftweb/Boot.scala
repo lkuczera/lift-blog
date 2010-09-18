@@ -29,7 +29,7 @@ class Boot extends Logger {
 
       DB.defineConnectionManager(DefaultConnectionIdentifier, vendor)
     }
-    Schemifier.schemify(true, Log.infoF _, User, Post, PostTag, Tag, Comment)
+    Schemifier.schemify(true, Log.infoF _, User, Post, PostTag, Tag, Comment, Property)
     // create default user if none is present
     if(DB.runQuery("select * from users")._2.isEmpty) {
 	    val res = this.getClass.getResourceAsStream("/basic.sql");
@@ -48,7 +48,8 @@ class Boot extends Logger {
 
     // Build SiteMap            
     val entries = 
-    Menu(Loc("Home", List("index"), "Home")) ::  
+    Menu(Loc("Home", List("index"), "Home")) ::
+    Menu(Loc("Properties",List("edit_properties"),"Properties", loggedIn)) ::
     Menu(Loc("Post",List("posting"),"Post to blog", loggedIn)) ::
     Menu(Loc("Edit",List("edit"),"Edit post", loggedIn, Hidden)) ::
     Menu(Loc("Details", List("details"), "Details", Hidden)) ::

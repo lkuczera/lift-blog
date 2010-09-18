@@ -1,0 +1,37 @@
+<lift:surround with="default" at="content">
+	<lift:embed what="markitup-head" />
+	<lift:Properties.edit form="POST">
+		<h2>Edit Blog Properties</h2>
+		
+		<p>
+				
+		Blog Title:<br/>
+		<property:title /><br/>
+		
+		Blog Subtitle:<br/>
+		<property:subtitle /><br/>
+		
+		Address:<br/>
+		<property:address /><br/>
+		
+		RSS Description:<br/>
+		<property:rssDescription /><br/>
+		
+		Meta Keywords:<br/>
+		<property:metaKeywords /><br/>
+
+		Meta Description:<br/>
+		<property:metaDescription /><br/>
+		
+		Copyright Note:<br/>
+		<property:copyrightNote /><br/>
+
+		Theme:<br/>
+		<property:theme /><br/>	
+		<br/>
+		
+		<property:submit />
+		
+		</p>
+	</lift:Properties.edit>
+</lift:surround>
