@@ -45,12 +45,17 @@
 		<div id="sidebar">
 			
 			<h2>Search Box</h2>	
-			<form action="#" class="searchform">
+			<form method="get" action="/search" class="searchform">
 				<p>
-				<input name="search_query" class="textbox" type="text" />
-				<input name="search" class="button" value="Search" type="submit" />
+							<lift:Search.search>
+								<search:searchTerm class="textbox"/>
+								<search:submit class="button"/>
+    						</lift:Search.search>
 				</p>			
 			</form>	
+
+			
+			
 					
 			<h2>Sidebar Menu</h2>
 			<lift:Menu.builder 

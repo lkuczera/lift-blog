@@ -49,6 +49,7 @@ class Boot extends Logger {
     // Build SiteMap            
     val entries = 
     Menu(Loc("Home", List("index"), "Home")) ::
+    Menu(Loc("Search",List("search"),"Search")) ::
     Menu(Loc("Properties",List("edit_properties"),"Properties", loggedIn)) ::
     Menu(Loc("Post",List("posting"),"Post to blog", loggedIn)) ::
     Menu(Loc("Edit",List("edit"),"Edit post", loggedIn, Hidden)) ::

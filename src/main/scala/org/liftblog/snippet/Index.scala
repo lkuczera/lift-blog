@@ -29,29 +29,21 @@ class Index {
 		//get number of comments for current post and bind html link in the view
 		def commentsText(post: Post) = {val comments = (Comment findAll By(Comment.postid, post.id)).length
 						Text("Comments(%d)".format((comments)))}
+		
 		Post.findAll(OrderBy(Post.date, Descending)).flatMap(post => bind("post",in, 
-				"title"-> <a href={urlify(post)}>{post.title}</a>, 
+				"title"-> <a href={post.urlify}>{post.title}</a>, 
 				"text" -> <xml:group>{Unparsed(shortenText(post.text))}</xml:group>,
 				"date" -> (new SimpleDateFormat(Const.format) format post.date.get),
-				"more" -> <a href={urlify(post)} class="readmore">Read more</a> ,
-				"comments" -> <a href={urlify(post)+"#comments"} class="comments">{commentsText(post)}</a>,
+				"more" -> <a href={post.urlify} class="readmore">Read more</a> ,
+				"comments" -> <a href={post.urlify+"#comments"} class="comments">{commentsText(post)}</a>,
 				"edit" -> (if(User.loggedIn_?) SHtml.link("/edit", ()=>Index.postidVar(post.id), Text("Edit"), ("class","readmore"))
 						   else Text(""))
 				)
 		)
 	}
 	
-	implicit def string2slash(str: String) = new SlashString(str)
-	case class SlashString(val str: String) {
-		def /(other: String) = str + "/" + other
-	}
-	def urlify(post: Post) = {
-		val date = post.date.is
-		val year = (date.getYear+1900).toString
-		val month = date.getMonth+1
-		val monthStr = if(month >9) month.toString else ("0"+month)
-		year / monthStr / post.title
-	}
+
+
 	
 	/**
 	 * Renders post in details.
@@ -110,7 +102,7 @@ class Index {
 		ajaxForm(bind("comm", in, 
 				"author" -> SHtml.text("", a =>author=a, ("id","comm-author")),
 				"website" -> SHtml.text("", w =>website=w),
-				"text" -> SHtml.textarea("", t=>text=t, ("id","comm-text")),
+				"text" -%> SHtml.textarea("", t=>text=t, ("id","comm-text")),
 				"submit" -> SHtml.ajaxSubmit("Post", ()=>onSubmit, ("class","button"))), Noop)
 		
 	}
@@ -118,6 +110,9 @@ class Index {
 }
 
 object Index {
+	
 	object postidVar extends RequestVar(S.param("postid").map(_.toLong) openOr 0L)
+	
 	def postid: Long = postidVar.is
+
 }

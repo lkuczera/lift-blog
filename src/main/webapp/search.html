@@ -1,0 +1,19 @@
+<lift:surround with="default" at="content">
+
+	<lift:Search.search form="GET">
+		<h2>Search</h2>
+		<p>
+		<search:searchTerm size="55" />
+		<search:submit />
+		</p>
+	
+    	
+		<ol>
+    		<search:resultItem>
+    			<li><search:itemLink/></li>
+    		</search:resultItem>
+    	</ol>
+    
+    </lift:Search.search>
+
+</lift:surround>

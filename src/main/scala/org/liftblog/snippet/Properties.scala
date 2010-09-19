@@ -63,11 +63,14 @@ class Properties {
 	
 	def titleLink: NodeSeq = <a href={Property.address.value}>{Property.title.value}</a>
 	
-	def subtitle: NodeSeq = Property.subtitle.value.asHtml
+	def subtitle: NodeSeq = <xml:group>{Unparsed(Property.subtitle.value)}</xml:group>
 	
 	def address: NodeSeq = Text(Property.address.value)
 	
-	def copyrightNote: NodeSeq = Property.copyrightNote.value.asHtml
+	def copyrightNote: NodeSeq = <xml:group>{Unparsed(Property.copyrightNote.value)}</xml:group>
+	
+	def rssLink = 
+	<link rel="alternate" type="application/rss+xml" title={Property.title.value} href={Text(Property.address.value + "/feed")} />
 	
 	def metaKeywordsTag: NodeSeq = 
 		<meta name="keywords" content={ Property.metaKeywords.value } />
