@@ -13,3 +13,4 @@ object LiftConsole {
     exit(0)
   }
 }
+

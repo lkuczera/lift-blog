@@ -1,7 +1,8 @@
 package org.liftblog {
 package snippet {
 
-import org.specs._
+import org.specs.Specification
+
 import org.specs.runner.JUnit3
 import org.specs.runner.ConsoleRunner
 import net.liftweb._

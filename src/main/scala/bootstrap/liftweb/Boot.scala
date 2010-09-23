@@ -29,7 +29,7 @@ class Boot extends Logger {
 
       DB.defineConnectionManager(DefaultConnectionIdentifier, vendor)
     }
-    Schemifier.schemify(true, Log.infoF _, User, Post, PostTag, Tag, Comment, Property)
+    Schemifier.schemify(true, Log.infoF _, User, Post, PostTag, Tag, Comment, Property, LinkList, LinkListItem)
     // create default user if none is present
     if(DB.runQuery("select * from users")._2.isEmpty) {
 	    val res = this.getClass.getResourceAsStream("/basic.sql");
@@ -51,6 +51,7 @@ class Boot extends Logger {
     Menu(Loc("Home", List("index"), "Home")) ::
     Menu(Loc("Search",List("search"),"Search")) ::
     Menu(Loc("Properties",List("edit_properties"),"Properties", loggedIn)) ::
+    Menu(Loc("EditLinkLists",List("edit_link_lists"),"Edit Link Lists", loggedIn)) ::
     Menu(Loc("Post",List("posting"),"Post to blog", loggedIn)) ::
     Menu(Loc("Edit",List("edit"),"Edit post", loggedIn, Hidden)) ::
     Menu(Loc("Details", List("details"), "Details", Hidden)) ::

@@ -1,5 +1,5 @@
 package org.liftblog
-import org.specs._
+import org.specs.SpecificationWithJUnit
 class HelloWorldTest extends SpecificationWithJUnit  {
 
 }
