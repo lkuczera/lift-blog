@@ -93,7 +93,8 @@ class Boot extends Logger {
     	case RewriteRequest(ParsePath("feed" :: Nil,_,_,_),_,_)  => RewriteResponse(List("RssView","feed"))
     	case RewriteRequest(ParsePath(year :: month :: post :: Nil,_,_, false),GetRequest,_) 
     		if(year.isYear &&  month.isMonth) => 
-    			RewriteResponse(List("details"), Map("title" -> post, month -> month, year -> year)) 
+    			RewriteResponse(List("details"), Map("title" -> post, month -> month, year -> year))
+    	case RewriteRequest(ParsePath("login" :: Nil,_,_,_),_,_)  => RewriteResponse("user_mgt" :: "login" :: Nil)
     }
     
     // 404.html handler
