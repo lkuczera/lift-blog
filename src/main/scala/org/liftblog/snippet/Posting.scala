@@ -13,7 +13,7 @@ import net.liftweb.widgets.autocomplete.AutoComplete
 class Posting extends Logger {
 	
 	/**
-	 * Creates PostTg ManyToMany relationships for specified post and tags.
+	 * Creates PostTag ManyToMany relationships for specified post and tags.
 	 * @param post - post to associate
 	 * @param tags - tags
 	 */
@@ -37,9 +37,9 @@ class Posting extends Logger {
 	 * @param tags
 	 */
 	def editTagsFor(post: Post, tags: List[String]) = {
-		val newTags = assocTags(post, tags)
 		val oldTags = PostTag.findAll(By(PostTag.post, post)).map(_.tag.obj).filter(_.isDefined).map(_.open_!)
-		val toremove = oldTags filterNot (newTags contains);
+		val newTags = assocTags(post, tags -- oldTags.map(_.text.is))
+		val toremove = oldTags filterNot (Tag.findAll(ByList(Tag.text, tags)) contains);
 		for(postTag <- PostTag.findAll(By(PostTag.post, post))) {
 			postTag.tag.obj match {
 				case Full(tag) if(toremove.contains(tag))=>  postTag.delete_!
