@@ -61,7 +61,7 @@ class Boot extends Logger {
     User.sitemap
 //User.sitemap 
     LiftRules.setSiteMap(SiteMap(entries:_*))
-
+    
     /*
      * Show the spinny image when an Ajax call starts
      */
@@ -95,6 +95,8 @@ class Boot extends Logger {
     		if(year.isYear &&  month.isMonth) => 
     			RewriteResponse(List("details"), Map("title" -> post, month -> month, year -> year))
     	case RewriteRequest(ParsePath("login" :: Nil,_,_,_),_,_)  => RewriteResponse("user_mgt" :: "login" :: Nil)
+    	case RewriteRequest(ParsePath("tag" :: tag :: Nil ,_,_,_),_,_)
+    		 => RewriteResponse("index" :: Nil, Map("tag" -> tag))
     }
     
     // 404.html handler

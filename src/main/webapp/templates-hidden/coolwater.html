@@ -1,15 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:lift="http://liftweb.net/" >
 <head>
-
-
-
 <link rel="stylesheet" href="/images/CoolWater.css" type="text/css" />
-
 <link rel="stylesheet" href="/css/coolwater-tweaks.css" type="text/css" />
-
-
-
 </head>
 
 <body>
@@ -60,6 +53,9 @@
 			<h2>Sidebar Menu</h2>
 			<lift:Menu.builder 
 			li_item:id="current"/>
+			
+			<h2>Tags</h2>
+			<lift:Index.allTags />
 			
 			<h2>Wise Words</h2>
 				

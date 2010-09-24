@@ -1,7 +1,6 @@
 package org.liftblog.snippet
 import scala.xml._
-
-import org.liftblog.model.{Post,User,Comment}
+import org.liftblog.model.{Post,User,Comment, Tag, PostTag}
 import net.liftweb.mapper._
 import java.text.SimpleDateFormat
 import scala.xml.{NodeSeq, Text}
@@ -24,13 +23,24 @@ class Index {
 	 * Renders posts list.
 	 */
 	def post(in: NodeSeq): NodeSeq = {
+		if(S.param("tag").isDefined) renderTag(in)
+		else renderPosts(Post.findAll(OrderBy(Post.date, Descending)), in)
+	}
+	
+	private[snippet] def renderTag(in: NodeSeq) = {
+		val tag = S.param("tag").map(tag_? => Tag.find(By(Tag.text, tag_?))) openOr S.redirectTo("/404.html")
+		val posts = PostTag.findAll(By(PostTag.tag,tag)).map(_.post.obj).filter(_.isDefined).map(_.open_!)
+		renderPosts(posts, in)
+	}
+	
+	private[snippet] def renderPosts(posts: Seq[Post], in: NodeSeq) = {
 		// FIXME - Bug with malformed xml when post is cut down
 		def shortenText(text: String) = text //if(text.length < strLength) text else text.substring(0, strLength)+" ..."
 		//get number of comments for current post and bind html link in the view
 		def commentsText(post: Post) = {val comments = (Comment findAll By(Comment.postid, post.id)).length
 						Text("Comments(%d)".format((comments)))}
 		
-		Post.findAll(OrderBy(Post.date, Descending)).flatMap(post => bind("post",in, 
+		posts.flatMap(post => bind("post",in, 
 				"title"-> <a href={post.urlify}>{post.title}</a>, 
 				"text" -> <xml:group>{Unparsed(shortenText(post.text))}</xml:group>,
 				"date" -> (new SimpleDateFormat(Const.format) format post.date.get),
@@ -41,7 +51,6 @@ class Index {
 				)
 		)
 	}
-	
 
 
 	
@@ -60,7 +69,7 @@ class Index {
 				"date" -> (new SimpleDateFormat(Const.format) format post.date.get))
 				
 			case Empty => Text("No such post")
-			case Failure(_,_,_) => S.redirectTo("/404.html")
+			case _ => S.error("Error occured"); S.redirectTo("/index")
 		}
 	}
 	
@@ -105,6 +114,10 @@ class Index {
 				"text" -%> SHtml.textarea("", t=>text=t, ("id","comm-text")),
 				"submit" -> SHtml.ajaxSubmit("Post", ()=>onSubmit, ("class","button"))), Noop)
 		
+	}
+	
+	def allTags(in: NodeSeq): NodeSeq = {
+		Tag.findAll.map(tag => <a href={"/tag/"+tag.text} class="taglink" >{tag.text}</a>)
 	}
 	
 }

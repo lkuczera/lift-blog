@@ -1,20 +1,52 @@
 package org.liftblog.snippet
 import scala.xml._
+import scala.collection.mutable.ListBuffer
 import org.liftblog.model._
 import _root_.net.liftweb.util._
 import _root_.net.liftweb.common._
 import _root_.net.liftweb.util.Helpers
 import net.liftweb.http._
 import Helpers._
+import net.liftweb.mapper.{By, ByList}
 import net.liftweb.textile.TextileParser
-class Posting {
+import net.liftweb.widgets.autocomplete.AutoComplete
+class Posting extends Logger {
 	
 	/**
-	 * Creates PostTag ManyToMany relationships for specified postid and tags.
-	 * @param postid - id of the post
-	 * @param tags - string containing space separated tags names 
+	 * Creates PostTg ManyToMany relationships for specified post and tags.
+	 * @param post - post to associate
+	 * @param tags - tags
 	 */
-	def assocTags(postid: Long, tags: String) = {}
+	def assocTags(post: Post, tags: Seq[String]) = {
+		val tagsBuf = new ListBuffer[Tag]()
+		for(tagText <- tags) {
+			val tag: Tag = Tag.find(By(Tag.text, tagText)) match {
+				case Full(tag) => tag
+				case Empty => Tag.create.text(tagText)
+				case f: Any => info("error occured" + f); S.redirectTo("/error")
+			}
+			tag.save
+			PostTag.join(tag, post)
+			tagsBuf += tag
+		}
+		tagsBuf.toList
+	}
+	/**
+	 * Add and/or remove tags.
+	 * @param post
+	 * @param tags
+	 */
+	def editTagsFor(post: Post, tags: List[String]) = {
+		val newTags = assocTags(post, tags)
+		val oldTags = PostTag.findAll(By(PostTag.post, post)).map(_.tag.obj).filter(_.isDefined).map(_.open_!)
+		val toremove = oldTags filterNot (newTags contains);
+		for(postTag <- PostTag.findAll(By(PostTag.post, post))) {
+			postTag.tag.obj match {
+				case Full(tag) if(toremove.contains(tag))=>  postTag.delete_!
+				case _ =>
+			}
+		}
+	}
 	
 	/** 
 	 * Creates new post.
@@ -22,14 +54,17 @@ class Posting {
 	 * @return
 	 */
 	def add(in: NodeSeq): NodeSeq = {
+		
 		var title = ""
 		var text = ""
 		var tags = ""
 		def submit() = {
 			if(title=="") S.error("Title musn't be empty") 
 			else {
-				val html =  text //TextileParser.toHtml(text, false).toString
-				Post.create.date(new java.util.Date).text(html).title(title).save
+				val html =  text 
+				val post = Post.create.date(new java.util.Date).text(html).title(title)
+				post.save
+				assocTags(post, tags.split(" "))
 				S.redirectTo("/index")
 			}
 		}
@@ -44,21 +79,23 @@ class Posting {
 	def edit(in: NodeSeq): NodeSeq = {
 		var title = ""
 		var text = ""
-		var tags = ""
 		var post = Post.find(Index.postid)
+		var tags = PostTag.findAll(By(PostTag.post, post.open_!)).
+			 map(_.tag.obj).filter(_.isDefined).map(_.open_!.text.is).mkString(" ")
 			
 		def submit() = {
 			if(title=="") S.error("Title musn't be empty") 
 			else {
-				val html = text //TextileParser.toHtml(text, false).toString
+				val html = text 
 				post.open_!.title(title).text(html).save
+				editTagsFor(post.open_!, tags.split(" ").toList)
 				S.redirectTo("/index")
 			}
 		}
 		post match {
 			case Full(p) => bind("post",in,
 					"title" -> SHtml.text(p.title, parm => title=parm, ("size","55")),
-					"tags" -> SHtml.text("", parm => tags=parm),
+					"tags" -> SHtml.text(tags, parm => tags=parm),
 					"text" -> SHtml.textarea(p.text, parm => text=parm, ("id", "markitup")),
 					"submit" -> SHtml.submit("Save", submit)
 					)

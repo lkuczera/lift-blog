@@ -3,8 +3,12 @@ import net.liftweb.mapper._
 
 class Tag extends LongKeyedMapper[Tag] with IdPK{
 	def getSingleton = Tag
-	object name extends MappedString(this,100)
+	object text extends MappedPoliteString(this,100) {
+		override def setFilter = {
+			List(x=> x.trim) // trim before saving to db
+		}
+	}
 }
 object Tag extends Tag with LongKeyedMetaMapper[Tag]{
-	override def fieldOrder=List(name)
+	override def fieldOrder=List(text)
 }
