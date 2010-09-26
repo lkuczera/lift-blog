@@ -26,7 +26,7 @@ class LinkListItem extends LongKeyedMapper[LinkListItem] with IdPK  {
 	def moveDown() = move(1)
 	
 	def move(toRelativePosition:Int) = 
-		LinkListItem.find(By(LinkListItem.position, this.position.is + toRelativePosition)) match {
+		LinkListItem.find(By(LinkListItem.linkListId, this.linkListId),By(LinkListItem.position, this.position.is + toRelativePosition)) match {
 			case  Full(item) =>{
 				//Change position with item
 				val thisPos = this.position.is
@@ -43,14 +43,14 @@ class LinkListItem extends LongKeyedMapper[LinkListItem] with IdPK  {
 		}
 	
 	override def delete_!() = {
-		val linkListItemsWithGreaterPositions = LinkListItem.findAll(By_>(LinkListItem.position, this.position.is))
+		val linkListItemsWithGreaterPositions = LinkListItem.findAll(By(LinkListItem.linkListId, this.linkListId),By_>(LinkListItem.position, this.position.is))
 		 
 		for(listItem <- linkListItemsWithGreaterPositions){
 			listItem.position.set(listItem.position.is-1)
 			listItem.save()
 		}
 		
-		delete_!
+		super.delete_!
 			
 	}
 	

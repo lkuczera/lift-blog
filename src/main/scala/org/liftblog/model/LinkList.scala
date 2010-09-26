@@ -17,9 +17,11 @@ class LinkList extends LongKeyedMapper[LinkList] with IdPK  {
 	
 	object userId extends MappedLongForeignKey(this,User)
 	
+	object show extends MappedBoolean(this)
+	
 	def items = 
 		LinkListItem.findAll(By(LinkListItem.linkListId, this.id), 
-				             OrderBy(LinkListItem.position, Descending))		            
+				             OrderBy(LinkListItem.position, Ascending))		            
 				             
 	def moveUp() = move(-1)
 	
@@ -49,10 +51,18 @@ class LinkList extends LongKeyedMapper[LinkList] with IdPK  {
 		for(list <- linkListsWithGreaterPositions){
 			list.position.set(list.position.is-1)
 			list.save()
-			logger.info("decrease pos")
 		}
 
 		super.delete_!
+	} 
+	
+	def addItem(title:String) = {
+		val newPos = 1 + (LinkListItem.findAll(By(LinkListItem.linkListId, this.id),OrderBy(LinkListItem.position, Descending), MaxRows(1)) match {
+			case Nil => -1
+			case last::rest => last.position.is 
+		})
+		
+		LinkListItem.create.title(title + newPos).position(newPos).linkListId(id.is).save()
 	}
 
 }

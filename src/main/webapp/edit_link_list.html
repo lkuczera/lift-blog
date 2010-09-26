@@ -1,0 +1,37 @@
+
+<lift:surround with="default" at="content">
+
+
+
+
+	<h2>Edit Link List</h2>
+	
+<p>
+	<lift:LinkLists.editLinkListProperties>
+		Title: <link_list:title /><br/>
+		Description: <link_list:description /><br/>
+		Show: <link_list:show /><br/>
+		<link_list:save /><br/>
+	</lift:LinkLists.editLinkListProperties>
+	
+	
+</p>
+
+<h3>Edit Link List Items</h3>
+<p>
+<div id="LinkListItemEditor">
+	<lift:LinkLists.editLinkListItemProperties/>
+</div>
+
+</p>
+
+<p>	
+	
+	<lift:LinkLists.addLinkListItemAjaxButton/>
+	
+	<div id="LinkListItems">
+		<lift:LinkLists.linkListItemsEditor/>
+	</div>
+</p>
+	
+</lift:surround>

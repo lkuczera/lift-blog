@@ -55,6 +55,7 @@ class Boot extends Logger {
     Menu(Loc("Post",List("posting"),"Post to blog", loggedIn)) ::
     Menu(Loc("Edit",List("edit"),"Edit post", loggedIn, Hidden)) ::
     Menu(Loc("Details", List("details"), "Details", Hidden)) ::
+    Menu(Loc("EditLinkList", List("edit_link_list") -> true, "Edit Link List", Hidden, loggedIn)) ::
     Menu(Loc("highlight", List("highlight"), "highlight", Hidden)) ::
     Menu(Loc("feed", List("feed"), "feed", Hidden)) ::
     Menu(Loc("RssView", List("RssView", "feed"), "RssView", Hidden)) ::
@@ -90,6 +91,8 @@ class Boot extends Logger {
 //    LiftRules.autoIncludeComet = x => false
     implicit def string2dateString(str: String): DateString = DateString(str)
     LiftRules.rewrite.append {
+    	case RewriteRequest(ParsePath("edit_link_list" :: linkListId :: Nil,_,_,_),_,_)  => 
+    		RewriteResponse(List("edit_link_list"), Map("link_list_id" -> linkListId))
     	case RewriteRequest(ParsePath("feed" :: Nil,_,_,_),_,_)  => RewriteResponse(List("RssView","feed"))
     	case RewriteRequest(ParsePath(year :: month :: post :: Nil,_,_, false),GetRequest,_) 
     		if(year.isYear &&  month.isMonth) => 
