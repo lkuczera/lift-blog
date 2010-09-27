@@ -62,7 +62,7 @@ class LinkList extends LongKeyedMapper[LinkList] with IdPK  {
 			case last::rest => last.position.is 
 		})
 		
-		LinkListItem.create.title(title + newPos).position(newPos).linkListId(id.is).save()
+		LinkListItem.create.title(title).position(newPos).address("http://").linkListId(id.is).save()
 	}
 
 }

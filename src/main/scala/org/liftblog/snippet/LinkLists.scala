@@ -219,7 +219,7 @@ class LinkLists{
 				SHtml.ajaxForm(
 						bind("link_list", in,
 								"title" -> SHtml.text(title, title = _, ("size", "47")),
-								"description" -> SHtml.textarea(description, description = _),
+								"description" -> SHtml.textarea(description, description = _, ("cols", "50")),
 								"show" -> SHtml.checkbox(show, show = _),
 								"save" -> SHtml.submit("Save", processSave _)
 						) ++ SHtml.hidden(processSave _)
@@ -233,7 +233,8 @@ class LinkLists{
 			<div>
 				Link Text: <link_list_item:title /><br/>
 				Link Address: <link_list_item:address /><br/>
-				Link Description: <link_list_item:description /><br/>
+				Link Description: <br/>
+				<link_list_item:description /><br/>
 				<link_list_item:save /><br/>
 	
 			</div>
@@ -275,7 +276,7 @@ class LinkLists{
 				SHtml.ajaxForm(bind("link_list_item", editLinkListItemPropertiesTemplate,
 				     "title" -> SHtml.text(title, title = _, ("id", "link_list_item_title"), ("size", "47")),
 					 "address" -> SHtml.text(address, address = _, ("id", "link_list_item_address"), ("size", "47")),
-					 "description" -> SHtml.textarea(description, description = _, ("id", "link_list_item_description")),
+					 "description" -> SHtml.textarea(description, description = _, ("id", "link_list_item_description"), ("cols", "50")),
 					 "save" -> SHtml.submit("Save", processSave _)
 					) ++ SHtml.hidden(processSave _)
 				)
@@ -283,6 +284,21 @@ class LinkLists{
 			case Empty => <div/>
 			case _ => S.redirectTo("/404.html")
 		}
-
+		
+		
+		def frontPageLinkList(in: NodeSeq ): NodeSeq = {
+				
+			val linkLists = LinkList.findAll(By(LinkList.show,true),OrderBy(LinkList.position, Ascending))
+		
+			linkLists.flatMap((list)=>{
+				bind("link_list", in,
+								"title" -> list.title.is,
+								"links" -> (list.items.flatMap((item)=>
+									<li><a href={item.address.is} alt={item.description.is}>{item.title.is}</a></li>))
+				)
+			})
+		} 
+		
+				
 
 }

@@ -71,6 +71,28 @@ object Property extends Property with LongKeyedMetaMapper[Property]{
 			                          name,
 								      defaultValue)
 	}
+
+	def shortDescriptionTitle = {
+		val name = "SHORT_DESCRIPTION_TITLE"
+		val defaultValue = "Wise Words"
+			
+		propertyFromResultBox(Property.find(By(Property.name, name)), 
+			                          name,
+								      defaultValue)
+	}
+	
+	def shortDescription = {
+		val name = "SHORT_DESCRIPTION"
+		val defaultValue = """<p>&quot;To have a quiet mind is to 
+			possess one's mind wholly; to have a calm spirit is to 
+			possess one's self.&quot; </p>
+					
+			<p class="align-right">- Hamilton Mabie</p>"""
+			
+		propertyFromResultBox(Property.find(By(Property.name, name)), 
+			                          name,
+								      defaultValue)
+	}
 	
 	def metaKeywords = {
 		val name = "META_KEYWORDS"

@@ -55,14 +55,21 @@
 			li_item:id="current"/>
 			
 			<h2>Tags</h2>
+			
 			<lift:Index.allTags />
 			
-			<h2>Wise Words</h2>
+			<h2><lift:Properties.shortDescriptionTitle /></h2>
 				
-			<p>&quot;To have a quiet mind is to possess one's mind wholly; to have a calm spirit is to 
-			possess one's self.&quot; </p>
-					
-			<p class="align-right">- Hamilton Mabie</p>
+			<lift:Properties.shortDescription />
+			
+			<lift:LinkLists.frontPageLinkList>
+				
+					<h2><link_list:title /></h2>
+					<ul>
+						<link_list:links />
+					</ul>
+				
+			</lift:LinkLists.frontPageLinkList>
 					
 		</div>
 				

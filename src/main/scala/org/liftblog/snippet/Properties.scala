@@ -14,7 +14,6 @@ class Properties {
 
 	def edit(in: NodeSeq): NodeSeq = {
 
-		Logger(classOf[Properties]).info("edit 2")
 		
 		var title = ""
 		var subtitle = ""
@@ -22,6 +21,8 @@ class Properties {
 		var theme = ""
 		var address = ""
 		var rssDescription = ""
+		var shortDescriptionTitle = ""	
+		var shortDescription = ""
 	    var metaKeywords = ""
 	    var metaDescription = ""
 			
@@ -32,6 +33,8 @@ class Properties {
 			Property.theme.value(theme).save()
 			Property.address.value(address).save()
 			Property.rssDescription.value(rssDescription).save()
+			Property.shortDescriptionTitle.value(shortDescriptionTitle).save()
+			Property.shortDescription.value(shortDescription).save()
 			Property.metaKeywords.value(metaKeywords).save()
 			Property.metaDescription.value(metaDescription).save()
 			
@@ -43,6 +46,8 @@ class Properties {
 				"subtitle" -> SHtml.text(Property.subtitle.value, parm => subtitle=parm, ("size","55")),
 				"address" -> SHtml.text(Property.address.value, parm => address=parm, ("size","55")),
 				"rssDescription" -> SHtml.textarea(Property.rssDescription.value, parm => rssDescription=parm,("cols","55")),
+				"shortDescriptionTitle" -> SHtml.text(Property.shortDescriptionTitle.value, parm => shortDescriptionTitle=parm, ("size","55")),
+				"shortDescription" -> SHtml.textarea(Property.shortDescription.value, parm => shortDescription=parm,("cols","55")),
 				"metaKeywords" -> SHtml.textarea(Property.metaKeywords.value, parm => metaKeywords=parm,("cols","55")),
 				"metaDescription" -> SHtml.textarea(Property.metaDescription.value, parm => metaDescription=parm,("cols","55")),
 				"copyrightNote" -> SHtml.text(Property.copyrightNote.value, parm => copyrightNote=parm, ("size","55")),
@@ -68,6 +73,10 @@ class Properties {
 	def address: NodeSeq = Text(Property.address.value)
 	
 	def copyrightNote: NodeSeq = <xml:group>{Unparsed(Property.copyrightNote.value)}</xml:group>
+	
+	def shortDescriptionTitle: NodeSeq = Text(Property.shortDescriptionTitle.value)
+	
+	def shortDescription: NodeSeq = <xml:group>{Unparsed(Property.shortDescription.value)}</xml:group>
 	
 	def rssLink = 
 	<link rel="alternate" type="application/rss+xml" title={Property.title.value} href={Text(Property.address.value + "/feed")} />

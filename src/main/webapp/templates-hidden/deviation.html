@@ -104,21 +104,23 @@ Released   : 20100328
 					<div style="clear: both;">&nbsp;</div>
 				</li>
 				<li>
-					<h2>Aliquam tempus</h2>
-					<p>Mauris vitae nisl nec metus placerat perdiet est. Phasellus dapibus semper consectetuer hendrerit.</p>
+					<h2>Tags</h2>
+
+			<lift:Index.allTags />
 				</li>
 				<li>
-					<h2>Categories</h2>
+					<h2><lift:Properties.shortDescriptionTitle/></h2>
+					<lift:Properties.shortDescription/>
+				</li>
+				<lift:LinkLists.frontPageLinkList>
+				<li>
+					<h2><link_list:title /></h2>
 					<ul>
-						<li><a href="#">Aliquam libero</a></li>
-						<li><a href="#">Consectetuer adipiscing elit</a></li>
-						<li><a href="#">Metus aliquam pellentesque</a></li>
-						<li><a href="#">Suspendisse iaculis mauris</a></li>
-						<li><a href="#">Urnanet non molestie semper</a></li>
-						<li><a href="#">Proin gravida orci porttitor</a></li>
+						<link_list:links />
 					</ul>
 				</li>
-				<li>
+				</lift:LinkLists.frontPageLinkList>
+				<!--<li>
 					<h2>Blogroll</h2>
 					<ul>
 						<li><a href="#">Aliquam libero</a></li>
@@ -139,7 +141,7 @@ Released   : 20100328
 						<li><a href="#">Urnanet non molestie semper</a></li>
 						<li><a href="#">Proin gravida orci porttitor</a></li>
 					</ul>
-				</li>
+				</li>-->
 			</ul>
 		</div>
 		<!-- end #sidebar -->
