@@ -1,4 +1,4 @@
-h1. Lift-Blog Readme
+Lift-Blog Readme
 
 Lift-blog is a simple blogging web application written in Lift. Currently it has support for the following features:
 
@@ -9,14 +9,14 @@ Lift-blog is a simple blogging web application written in Lift. Currently it has
 * Link lists with an ajax editor
 * Two themes to chose from (It is very easy to add new themes)
 
-h2. Blogs Using Lift-Blog
+Blogs Using Lift-Blog
 
 * http://acidbits.org/blog - Creator of lift-blog
 * http://winsh.me - Contributor
 
 See also demo: http://www.acidbits.org/lift-blog (might be older version)
 
-h2. Installation
+Installation
 
 git clone git://github.com/kukems/lift-blog.git
 cd lift-blog
