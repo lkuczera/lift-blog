@@ -9,7 +9,6 @@ import net.liftweb.http._
 import Helpers._
 import net.liftweb.mapper.{By, ByList}
 import net.liftweb.textile.TextileParser
-import net.liftweb.widgets.autocomplete.AutoComplete
 class Posting extends Logger {
 	
 	/**
