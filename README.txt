@@ -11,11 +11,11 @@ Lift-blog is a simple blogging web application written in Lift. Currently it has
 
 Blogs Using Lift-Blog
 
-* http://acidbits.org/blog - Creator of lift-blog
-* http://winsh.me - Contributor
+* http://acidbits.org/blog 
+* http://winsh.me 
 
-See also demo: http://www.acidbits.org/lift-blog (might be older version)
-
+See also demo: http://www.acidbits.org/lift-blog (its grandpa, update it please!)
+ 
 Installation
 
 git clone git://github.com/kukems/lift-blog.git
@@ -29,4 +29,4 @@ p: demo11
 
 Have fun!
 
-Lift-blog needs new design. If you would like to contribute one please contact me :)
+Lift-blog needs new design. If you would like to contribute one please contact team :)

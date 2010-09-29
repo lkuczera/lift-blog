@@ -117,7 +117,9 @@ class Index {
 	}
 	
 	def allTags(in: NodeSeq): NodeSeq = {
-		Tag.findAll.map(tag => <a href={"/tag/"+tag.text} class="taglink" >{tag.text}</a>)
+		val tags = PostTag.findAll.map(_.tag.obj).filter(_.isDefined).map(_.open_!).removeDuplicates
+		tags.map(tag => <a href={"/tag/"+tag.text} class="taglink" >{tag.text}</a>)
+		
 	}
 	
 }

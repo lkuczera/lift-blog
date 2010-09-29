@@ -47,6 +47,7 @@ class Posting extends Logger {
 		}
 	}
 	
+	
 	/** 
 	 * Creates new post.
 	 * @param in

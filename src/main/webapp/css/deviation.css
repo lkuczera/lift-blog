@@ -420,3 +420,7 @@ a:hover {
 #footer a {
 	color: #464032;
 }
+
+.taglink {
+ 	margin-right: 0.25em;
+}
