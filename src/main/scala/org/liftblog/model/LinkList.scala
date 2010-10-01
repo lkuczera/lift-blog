@@ -72,11 +72,7 @@ object LinkList extends LinkList with LongKeyedMetaMapper[LinkList]{
 	def add(title:String) = {
 		val newPos = 1 + (LinkList.findAll(OrderBy(LinkList.position, Descending), MaxRows(1)) match {
 			case Nil => -1
-			case last::Nil => last.position.is
-			/* it should never happen but its good place to 
-			 * think about error reporting and eventual binding this code with S or exception handling routine*/
-//			case _ => throw new RuntimeException("It shouldn't happen")
-			
+			case last::rest => last.position.is	
 		})
 		
 		LinkList.create.title(title + newPos).position(newPos).save()

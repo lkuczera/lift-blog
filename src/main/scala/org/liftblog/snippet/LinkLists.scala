@@ -204,10 +204,6 @@ class LinkLists{
 			
 				def processSave() = {
 					
-					val logger = Logger(classOf[LinkLists])
-					
-					logger.info("process save")
-					
 					linkList.title.set(title)
 					linkList.description.set(description)
 					linkList.show.set(show)
@@ -252,22 +248,17 @@ class LinkLists{
 			
 				def processSave() = {
 					
-					val logger = Logger(classOf[Property])
-					
-					logger.info("process save")
-					
 					currentLinkListItemRequestVar.set(currentLinkListItem)
 							 	
 					currentLinkListRequestVar.set(LinkList.find(By(LinkList.id,linkListItem.linkListId)))
-										
-					logger.info("Re set")
 					
 					linkListItem.title.set(title)
 					linkListItem.description.set(description)
 					linkListItem.address.set(address)
 					linkListItem.save
 					
-					 
+					currentLinkListItemRequestVar.set(Full(linkListItem))
+					
 					SetHtml("LinkListItems", linkListItemsEditor) &
 					Alert("Successfuly Saved Changes")
 					
