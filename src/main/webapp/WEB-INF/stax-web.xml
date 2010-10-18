@@ -1,8 +1,0 @@
-<stax-web-app xmlns="http://www.stax.net/xml/webapp/1">
-	<appid>kukems/lift-blog</appid>
-	
-	<context-param />
-	<resource type="javax.sql.DataSource" />
-	<sessionDataSource />
-	<realm />
-</stax-web-app>

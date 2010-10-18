@@ -86,9 +86,7 @@ class Boot extends Logger {
     	case Req("static" :: _, _, _) => false 
     } 
     LiftRules.useXhtmlMimeType = false
-//    LiftRules.xhtmlValidator = Empty
-//    LiftRules.autoIncludeAjax = x => false
-//    LiftRules.autoIncludeComet = x => false
+
     implicit def string2dateString(str: String): DateString = DateString(str)
     LiftRules.rewrite.append {
     	case RewriteRequest(ParsePath("edit_link_list" :: linkListId :: Nil,_,_,_),_,_)  => 
