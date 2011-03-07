@@ -6,7 +6,7 @@ import net.liftweb.common.Full
 
 class GlobalConfiguration extends LongKeyedMapper[GlobalConfiguration] with IdPK {
 	def getSingleton = GlobalConfiguration
-	def chosenLanguages
+	object chosenLanguages extends MappedLongForeignKey(this, Language) 
 }
 
 object GlobalConfiguration extends GlobalConfiguration with LongKeyedMetaMapper[GlobalConfiguration] {

@@ -62,7 +62,7 @@ class Posting extends Logger {
 			println
 			println(postValues)
 			println
-			Languages..foreach(lang => {
+			List("en", "pl").foreach(lang => {
 				val title = postValues(lang+"title").trim
 				if(title=="") S.error("Title musn't be empty")
 				else {

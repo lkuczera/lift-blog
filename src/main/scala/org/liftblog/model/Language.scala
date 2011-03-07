@@ -3,14 +3,14 @@ import net.liftweb.mapper._
 import net.liftweb.util._
 import net.liftweb.common.Full
 
-class Language extends LongKeyedMapper[Languages] with IdPK {
-	def getSingleton = Languages
+class Language extends LongKeyedMapper[Language] with IdPK {
+	def getSingleton = Language
 	object chosenLanguages extends MappedLanguageList(this)
 	object countryCode extends MappedString(this, 5)
+	object countryName extends MappedString(this, 60)
 }
 
 object Language extends Language with LongKeyedMetaMapper[Language] {
-	def getAll = find
 }
 
 class MappedLanguageList[T <: Mapper[T]](towner: T) extends MappedString(towner, 256) {
