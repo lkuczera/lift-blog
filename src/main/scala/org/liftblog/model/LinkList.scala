@@ -17,7 +17,9 @@ class LinkList extends LongKeyedMapper[LinkList] with IdPK  {
 	
 	object userId extends MappedLongForeignKey(this,User)
 	
-	object show extends MappedBoolean(this)
+	object show extends MappedBoolean(this) {
+		override def dbColumnName = "nxshow1"
+	}
 	
 	def items = 
 		LinkListItem.findAll(By(LinkListItem.linkListId, this.id), 

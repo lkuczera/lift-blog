@@ -104,13 +104,13 @@ class Index {
 				 <p style="margin-bottom: 5px; font-weight: bold;"><a href={website}> {author}</a> said...<br/></p>	
 					<p>{Unparsed(html)}</p>
 	    			<p>{now}</p> 					
-	    		</p>))
+	    		</p>))  & clearForm
 			
 		}
-		
+		def clearForm = JsRaw("$('#comm-author').val('')") & JsRaw("$('#comm-text').val('')") & JsRaw("$('#comm-website').val('')")
 		ajaxForm(bind("comm", in, 
 				"author" -> SHtml.text("", a =>author=a, ("id","comm-author")),
-				"website" -> SHtml.text("", w =>website=w),
+				"website" -> SHtml.text("", w =>website=w,("id", "comm-website")),
 				"text" -%> SHtml.textarea("", t=>text=t, ("id","comm-text")),
 				"submit" -> SHtml.ajaxSubmit("Post", ()=>onSubmit, ("class","button"))), Noop)
 		

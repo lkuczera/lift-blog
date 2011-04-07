@@ -27,9 +27,37 @@
 			<url>http://scala-tools.org/repo-snapshots</url>
 			<snapshots />
 		</repository>
+		<repository>
+			<id>stax-releases</id>
+			<url>http://mvn.stax.net/content/repositories/releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>stax-snapshots</id>
+			<url>http://mvn.stax.net/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
+		<pluginRepository>
+			<id>stax-plugins-releases</id>
+			<url>http://mvn.stax.net/content/repositories/releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>stax-plugins-snapshots</id>
+			<url>http://mvn.stax.net/content/repositories/snapshots</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
 		<pluginRepository>
 			<id>scala-tools.org</id>
 			<name>Scala-Tools Maven2 Repository</name>
@@ -39,9 +67,9 @@
 
 	<dependencies>
 		<dependency>
-  			<groupId>mysql</groupId>
-  			<artifactId>mysql-connector-java</artifactId>
-  			<version>5.0.8</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.0.8</version>
 		</dependency>
 		<dependency>
 			<groupId>net.liftweb</groupId>
@@ -120,6 +148,10 @@
 		<sourceDirectory>src/main/scala</sourceDirectory>
 		<testSourceDirectory>src/test/scala</testSourceDirectory>
 		<plugins>
+			<plugin>
+				<groupId>net.stax</groupId>
+				<artifactId>stax-maven-plugin</artifactId>
+			</plugin>
 			<plugin>
 				<groupId>org.scala-tools</groupId>
 				<artifactId>maven-scala-plugin</artifactId>

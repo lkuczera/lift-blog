@@ -16,8 +16,6 @@ object Property extends Property with LongKeyedMetaMapper[Property]{
 	
 	private val logger = Logger(classOf[Property])
 	
-
-	
 	private def propertyFromResultBox(box:Box[Property], 
 			                          propertyName:String,
 								      defaultValue:String):Property = box match {

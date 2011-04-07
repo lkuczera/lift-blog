@@ -47,33 +47,40 @@ class Posting extends Logger {
 		}
 	}
 	
-	
+		
 	/** 
 	 * Creates new post.
 	 * @param in
 	 * @return
 	 */
 	def add(in: NodeSeq): NodeSeq = {
-		
+		var postValues = Map[String,String]()
 		var title = ""
 		var text = ""
 		var tags = ""
 		def submit() = {
-			if(title=="") S.error("Title musn't be empty") 
-			else {
-				val html =  text 
-				val post = Post.create.date(new java.util.Date).text(html).title(title)
-				post.save
-				assocTags(post, tags.split(" "))
-				S.redirectTo("/index")
-			}
-		}
-		bind("post",in,
-				"title" -> SHtml.text("", parm => title=parm, ("size","55")),
-				"tags" -> SHtml.text("", parm => tags=parm),
-				"text" -> SHtml.textarea("", parm => text=parm, ("id", "markitup")),
-				"submit" -> SHtml.submit("Submit", submit)
+			println
+			println(postValues)
+			println
+			List("en", "pl").foreach(lang => {
+				val title = postValues(lang+"title").trim
+				if(title=="") S.error("Title musn't be empty")
+				else {
+					val html = postValues(lang+"text") 
+					val post = Post.create.date(new java.util.Date).text(html).title(title)
+					post.save
+					assocTags(post, tags.split(" "))
+				}}
 			)
+			if(S.errors.isEmpty) S.redirectTo("/index")
+		}
+		List("en","pl").flatMap(lang => bind("post",in,
+				"lang" -> lang, 
+				"title" -> SHtml.text("", parm => postValues += ((lang+"title",parm)), ("size","55")),
+				"tags" -> SHtml.text("", parm => postValues += ((lang+"tags",parm))),
+				"text" -> SHtml.textarea("", parm => postValues += ((lang+"text",parm)), ("id", "markitup"))
+				
+			)) ++ SHtml.submit("submit", submit)
 	}
 	
 	def edit(in: NodeSeq): NodeSeq = {
