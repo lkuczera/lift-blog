@@ -1,0 +1,4 @@
+db.driver=org.postgresql.Driver
+db.url=jdbc:postgresql:acidbits
+db.user=acidbits
+db.password=acidbits

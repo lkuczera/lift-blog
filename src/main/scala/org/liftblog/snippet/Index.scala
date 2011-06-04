@@ -34,15 +34,14 @@ class Index {
 	}
 	
 	private[snippet] def renderPosts(posts: Seq[Post], in: NodeSeq) = {
-		// FIXME - Bug with malformed xml when post is cut down
-		def shortenText(text: String) = text //if(text.length < strLength) text else text.substring(0, strLength)+" ..."
+		
 		//get number of comments for current post and bind html link in the view
 		def commentsText(post: Post) = {val comments = (Comment findAll By(Comment.postid, post.id)).length
 						Text("Comments(%d)".format((comments)))}
 		
 		posts.flatMap(post => bind("post",in, 
 				"title"-> <a href={post.urlify}>{post.title}</a>, 
-				"text" -> <xml:group>{Unparsed(shortenText(post.text))}</xml:group>,
+				"text" -> <xml:group>{Unparsed(post.text)}</xml:group>,
 				"date" -> (new SimpleDateFormat(Const.format) format post.date.get),
 				"more" -> <a href={post.urlify} class="readmore">Read more</a> ,
 				"comments" -> <a href={post.urlify+"#comments"} class="comments">{commentsText(post)}</a>,

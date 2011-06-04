@@ -59,10 +59,7 @@ class Posting extends Logger {
 		var text = ""
 		var tags = ""
 		def submit() = {
-			println
-			println(postValues)
-			println
-			List("en", "pl").foreach(lang => {
+			List("en").foreach(lang => {
 				val title = postValues(lang+"title").trim
 				if(title=="") S.error("Title musn't be empty")
 				else {
@@ -74,7 +71,7 @@ class Posting extends Logger {
 			)
 			if(S.errors.isEmpty) S.redirectTo("/index")
 		}
-		List("en","pl").flatMap(lang => bind("post",in,
+		List("en").flatMap(lang => bind("post",in,
 				"lang" -> lang, 
 				"title" -> SHtml.text("", parm => postValues += ((lang+"title",parm)), ("size","55")),
 				"tags" -> SHtml.text("", parm => postValues += ((lang+"tags",parm))),
