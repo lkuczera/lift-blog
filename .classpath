@@ -1,11 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <classpath>
-	<classpathentry kind="src" output="target/classes" path="src/main/scala"/>
-	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources"/>
-	<classpathentry kind="src" output="target/test-classes" path="src/test/scala"/>
-	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
-	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
-	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
-	<classpathentry kind="output" path="target/classes"/>
+<classpathentry kind="src" path="src/test/scala" output="target/scala_2.9.0/test-classes" including="**/*.scala" />
+<classpathentry kind="src" path="src/main/scala" including="**/*.scala" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/commons-io-1.4.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/lift-actor_2.9.0-2.4-SNAPSHOT.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/lift-db_2.9.0-2.4-SNAPSHOT.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/servlet-api-2.5-20081211.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/scalap-2.9.0.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/lift-common_2.9.0-2.4-SNAPSHOT.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-6.1.22.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/lift-textile_2.9.0-2.4-SNAPSHOT.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/commons-codec-1.4.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/derby-10.7.1.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/logback-core-0.9.26.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/lift-widgets_2.9.0-2.4-SNAPSHOT.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/lift-proto_2.9.0-2.4-SNAPSHOT.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/mail-1.4.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/lift-util_2.9.0-2.4-SNAPSHOT.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/activation-1.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/postgresql-9.0-801.jdbc4.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/h2-1.2.147.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/lift-mapper_2.9.0-2.4-SNAPSHOT.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/commons-fileupload-1.2.2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/lift-json_2.9.0-2.4-SNAPSHOT.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/logback-classic-0.9.26.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/specs_2.9.0-1.6.8.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/lift-webkit_2.9.0-2.4-SNAPSHOT.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/slf4j-api-1.6.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/joda-time-1.6.2.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/jetty-util-6.1.22.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/htmlparser-1.2.1.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/compile/paranamer-2.3.jar" />
+<classpathentry kind="lib" path="lib_managed/scala_2.9.0/test/junit-4.5.jar" />
+<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER" />
+<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" />
+<classpathentry kind="output" path="target/scala_2.9.0/classes" />
 </classpath>
