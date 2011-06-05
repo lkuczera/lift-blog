@@ -23,9 +23,6 @@ class Index {
    * Renders posts list.
    */
   def post(): CssSel = {
-    println("here")
-    println("here")
-    println("here")
     if (S.param("tag").isDefined) renderTag
     else renderPosts(Post.findAll(OrderBy(Post.date, Descending)))
   }
@@ -59,16 +56,15 @@ class Index {
    * @param in
    * @return
    */
-  def show(in: NodeSeq): NodeSeq = {
+  def show(): CssSel = {
     val postTitle = S.param("title") openOr S.redirectTo("/404.html")
-
     Post.find(By(Post.title, postTitle)) match {
-      case Full(post) => bind("post", in,
-        "title" -> post.title,
-        "text" -> <xml:group>{ Unparsed(post.text) }</xml:group>,
-        "date" -> (new SimpleDateFormat(Const.format) format post.date.get))
-
-      case Empty => Text("No such post")
+      case Full(post) => "#post" #> ( 
+        "#title" #> post.title &
+        "#text" #> <xml:group>{ Unparsed(post.text.is) }</xml:group> &
+        "#date" #> (new SimpleDateFormat(Const.format) format post.date.get)
+        )
+      case Empty => S.redirectTo("/404.html")
       case _ => S.error("Error occured"); S.redirectTo("/index")
     }
   }
@@ -76,19 +72,19 @@ class Index {
   /**
    * Binds comments for related post.
    */
-  def comments(in: NodeSeq): NodeSeq = {
+  def comments(): CssSel = {
     val postTitle = S.param("title") openOr S.redirectTo("/404.html")
     val postid = Post find (By(Post.title, postTitle)) openOr S.redirectTo("/404.html")
-    Comment.findAll(By(Comment.postid, postid)).flatMap(comment =>
-      bind("comment", in, "author" -> <a href={ comment.website }>{ comment.author }</a>,
-        "text" -> <xml:group>{ Unparsed(comment.text) }</xml:group>,
-        "date" -> (new SimpleDateFormat("E d MMM, HH:mm") format comment.date.get)))
+    "#commentsDiv" #> Comment.findAll(By(Comment.postid, postid)).map(comment =>
+      "#author" #> <a href={ comment.website }>{ comment.author }</a> &
+        "#text" #> <xml:group>{ Unparsed(comment.text) }</xml:group> & 
+        "#date" #> (new SimpleDateFormat("E d MMM, HH:mm") format comment.date.get))
   }
 
   /**
    * Creates ajax form for commenting
    */
-  def addComment(in: NodeSeq): NodeSeq = {
+  def addComment(): CssSel = {
     var author = ""
     var text = ""
     var website = ""
@@ -107,11 +103,12 @@ class Index {
 
     }
     def clearForm = JsRaw("$('#comm-author').val('')") & JsRaw("$('#comm-text').val('')") & JsRaw("$('#comm-website').val('')")
-    ajaxForm(bind("comm", in,
-      "author" -> SHtml.text("", a => author = a, ("id", "comm-author")),
-      "website" -> SHtml.text("", w => website = w, ("id", "comm-website")),
-      "text" -%> SHtml.textarea("", t => text = t, ("id", "comm-text")),
-      "submit" -> SHtml.ajaxSubmit("Post", () => onSubmit, ("class", "button"))), Noop)
+    "#addCommentBox" #> ( 
+      "#addCommentAuthor" #> SHtml.text("", a => author = a, ("id", "comm-author")) &
+      "#addCommentWebsite" #> SHtml.text("", w => website = w, ("id", "comm-website")) &
+      "#addCommentText" #> SHtml.textarea("", t => text = t, ("id", "comm-text")) &
+      "type=submit" #> SHtml.ajaxSubmit("Post", () => onSubmit, ("class", "button"))
+      )
 
   }
 
