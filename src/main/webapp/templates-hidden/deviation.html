@@ -88,13 +88,13 @@ Released   : 20100328
 				<li>
 					<div id="search" >
 					
-						<div>
-						<form method="get" action="/search">
-							<lift:Search.search>
-								<search:searchTerm id="search-text"/>
-								<search:submit id="search-submit"/>
-    						</lift:Search.search>
-    					</form>
+            <div>
+              <form method="get" action="/search" class="searchform l:Search.search">
+                <p>
+                  <input id="term" type="text" size="55" class="textbox"/>
+                  <input type="submit" value="Search" class="button"/>
+                </p>
+              </form>
 						
 							<!--<input type="text" name="s" id="search-text" value="" />
 							<input type="submit" id="search-submit" value="GO" />-->

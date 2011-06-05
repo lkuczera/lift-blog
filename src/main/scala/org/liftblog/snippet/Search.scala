@@ -13,82 +13,59 @@ import scala.xml._
 class Search {
 	
 	object seachResults extends RequestVar[List[Post]](Nil)
-	
 	object seachQuery extends RequestVar[String]("")
-	
-	def search(in: NodeSeq): NodeSeq = {
-		
-		var searchTerm = seachQuery.is
-			
+  
+  def search = {
+    var searchTerm = seachQuery.is
+    
 		def submit() = {
-			
 			seachQuery.set(searchTerm)
 			
-			if(searchTerm.trim.length==0){
+			if(searchTerm.trim.length == 0) {
 				S.notice("No search query entered")
-			}else{
-			
+			} else{
 				val searchWords = searchTerm.split("""\s""")
-			
 				val posts = Post.findAll
-			
-				val postsRankingNotSortedAll = posts.map((post)=>{
-				
-					val allPostText = post.title.is + " " + post.text.is
-				
-					def numberOfOccurences(word:String) = allPostText.split(word).length - 1
-				
-					val exactMatchPattern = """.*""" + searchTerm + """.*"""
-				
-					val occurancis = searchWords.foldLeft(0)((ranking, searchWord)=>{
-					numberOfOccurences(searchWord) + ranking
-					}) 
-				
-					val ranking = occurancis + (if(allPostText.matches(exactMatchPattern)) 100 else 0)
-				
-					(ranking, post)
-				
-				})
-			
+				val postsRankingNotSortedAll = posts.map((post) => {
+            val allPostText = post.title.is + " " + post.text.is
+            
+            def numberOfOccurences(word:String) = allPostText.split(word).length - 1
+            
+            val exactMatchPattern = """.*""" + searchTerm + """.*"""
+            val occurancis = searchWords.foldLeft(0) {
+              (ranking, searchWord) => numberOfOccurences(searchWord) + ranking
+            }
+            
+            val ranking = occurancis + (if(allPostText.matches(exactMatchPattern)) 100 else 0)
+            
+            (ranking, post)
+          })
+        
 				val postsRankingNotSorted = postsRankingNotSortedAll.filter(_._1 > 0)
-			
-				val postsRankingSorted = postsRankingNotSorted.sort((e1, e2) => (e1._1 >= e2._1))
-			
+				val postsRankingSorted = postsRankingNotSorted.sortWith((e1, e2) => (e1._1 >= e2._1))
 				val orderedResults = postsRankingSorted.map(_._2)
-			
+        
 				seachResults.set(orderedResults)
-			
 			}
-			
 		}
-		
-		val searchBoxBinded =  
-			bind("search",in,
-				"searchTerm" -%> SHtml.text(searchTerm, parm => searchTerm=parm/*, ("size","55")*/),
-				"submit" -%> SHtml.submit("Search", submit)
-			)
-			
-			val results = seachResults.is
-			
-			searchBoxBinded
-			
-			results match{
-				case Nil => {
-					bind("search",searchBoxBinded,
-							"resultItem" -> (if(searchTerm.length>0)
-												Text("No results matching the serach query found")
-											 else Text("")))
-				}
-				case results => 
-					bind("search",searchBoxBinded, 
-						"resultItem"-> 
-							<ol>{results.flatMap((post)=> <li><a href={post.urlify}>{post.title}</a></li>)}</ol>
-				)
-			}
-		
-	}
-	
-
-		
-
+    
+    val bindSearchBox =
+      "#term" #> SHtml.text(searchTerm, parm => searchTerm = parm) &
+      ":submit" #> SHtml.submit("Search", submit)
+     
+     val bindResult = 
+       seachResults.is match {
+          case Nil =>
+            "ol *" #> {
+              if(searchTerm.length>0)
+                "No results matching the search query found"
+              else ""
+            }
+          case results =>
+            "li *" #> (results flatMap {
+              (post) => <a href={post.urlify}>{post.title}</a>
+            })
+        }
+     bindSearchBox & bindResult
+  }
 }
