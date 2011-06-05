@@ -1,13 +1,20 @@
-<lift:surround with="default" at="content">
-    	
-	    	<div id="posts" class="lift:Index.post"> 
-		    	<h2 id="title" >Post title goes here</h2>
-				<p id="text">Post content here</p>
-				<p class="post-footer align-left">					
-					<a id="more" href="/more"></a> | <a id="comments" href="/more"></a>	 | <a id="edit"></a>
-					<span class="date" id="date"></span>	
-				</p>
-			</div>
-    	
-</lift:surround>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+    <title>Home</title>
+  </head>
+  <body class="lift:content_id=main">
+    <div id="main" class="lift:surround?with=default;at=content">
+      <div id="posts" class="lift:Index.post">
+        <h2 id="title" >Post title goes here</h2>
+        <p id="text">Post content here</p>
+        <p class="post-footer align-left">
+          <a id="more" href="/more"></a> | <a id="comments" href="/more"></a>	 | <a id="edit"></a>
+          <span class="date" id="date"></span>	
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
 
