@@ -29,7 +29,7 @@ class Boot extends Logger {
       DB.defineConnectionManager(DefaultConnectionIdentifier, vendor)
       
     }
-    Schemifier.schemify(true, Log.infoF _, User, Post, PostTag, Tag, Comment, Property, LinkList, LinkListItem)
+    Schemifier.schemify(true, Schemifier.infoF _, User, Post, PostTag, Tag, Comment, Property, LinkList, LinkListItem)
     // create default user if none is present
     if(DB.runQuery("select * from users")._2.isEmpty) {
 	    val res = this.getClass.getResourceAsStream("/basic.sql");
