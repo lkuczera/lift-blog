@@ -1,14 +1,24 @@
-<lift:surround with="default" at="content">
-	<lift:embed what="markitup-head" />
-	<lift:Posting.edit form="POST">
-		<h2>Edit post entry</h2>
-		<p>
-		Title:<br/>
-		<post:title /><br/>
-		Tags:<br/> <post:tags/> <br/>
-		Text:<br/>
-		<post:text />
-		<post:submit />
-		</p>
-	</lift:Posting.edit>
-</lift:surround>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  </head>
+  <body class="lift:content_id=main">
+    <div id="main" class="lift:surround?with=default;at=content">
+      <span class="lift:embed?what=markitup-head">
+        replaced with embedded content
+      </span>
+
+      <form class="lift:Posting.edit" action="#" method="get">
+        <h2>Edit Post</h2>
+        <p>
+            Title: <div class="title" /><br />
+            Tags: <div class="tags" /><br />
+            Post:<div class="text" /><br />
+            <input type="submit" value="Post" />
+        </p>
+
+      </form>
+    </div>
+  </body>
+</html>

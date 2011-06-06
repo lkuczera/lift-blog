@@ -9,6 +9,8 @@ import net.liftweb.http._
 import Helpers._
 import net.liftweb.mapper.{By, ByList}
 import net.liftweb.textile.TextileParser
+
+
 class Posting extends Logger {
 	
 	/**
@@ -71,38 +73,39 @@ class Posting extends Logger {
 			)
 			if(S.errors.isEmpty) S.redirectTo("/index")
 		}
-		List("en").flatMap(lang => bind("post",in,
-				"lang" -> lang, 
-				"title" -> SHtml.text("", parm => postValues += ((lang+"title",parm)), ("size","55")),
-				"tags" -> SHtml.text("", parm => postValues += ((lang+"tags",parm))),
-				"text" -> SHtml.textarea("", parm => postValues += ((lang+"text",parm)), ("id", "markitup"))
-				
-			)) ++ SHtml.submit("submit", submit)
+    ((".post" #> List("en").map( lang =>
+		  ".lang" #> lang &
+			".title" #> SHtml.text("", parm => postValues += ((lang+"title",parm)), ("size","55")) &
+			".tags" #> SHtml.text("", parm => postValues += ((lang+"tags",parm))) &
+			".text" #> SHtml.textarea("", parm => postValues += ((lang+"text",parm)), ("id", "markitup"))
+		 )) & ":submit" #> SHtml.submit("Post", submit))(in)
 	}
 	
 	def edit(in: NodeSeq): NodeSeq = {
 		var title = ""
 		var text = ""
-		var post = Post.find(Index.postid)
+		val post = Post.find(Index.postid)
 		var tags = PostTag.findAll(By(PostTag.post, post.open_!)).
 			 map(_.tag.obj).filter(_.isDefined).map(_.open_!.text.is).mkString(" ")
 			
-		def submit() = {
+		def submit(p: Post) = {
+
 			if(title=="") S.error("Title musn't be empty") 
 			else {
-				val html = text 
-				post.open_!.title(title).text(html).save
-				editTagsFor(post.open_!, tags.split(" ").toList)
+				val html = text
+        p.save
+        editTagsFor(p, tags.split(" ").toList)
 				S.redirectTo("/index")
 			}
 		}
+
 		post match {
-			case Full(p) => bind("post",in,
-					"title" -> SHtml.text(p.title, parm => title=parm, ("size","55")),
-					"tags" -> SHtml.text(tags, parm => tags=parm),
-					"text" -> SHtml.textarea(p.text, parm => text=parm, ("id", "markitup")),
-					"submit" -> SHtml.submit("Save", submit)
-					)
+			case Full(p) =>
+					(".title" #> SHtml.text(p.title, p.title.set(_), ("size","55")) &
+					".tags" #> SHtml.text(tags, parm => tags=parm) &
+					".text" #> SHtml.textarea(p.text, p.text.set(_), ("id", "markitup")) &
+					"submit" #> SHtml.submit("Save", () => submit(p)))(in)
+
 			case Empty => S.error("Post to edit not found"); S.redirectTo("/index")
 			case _ => S.error("Error occured"); S.redirectTo("/index")
 		}
