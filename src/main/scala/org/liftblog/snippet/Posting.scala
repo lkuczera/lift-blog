@@ -3,12 +3,12 @@ import scala.xml._
 import scala.collection.mutable.ListBuffer
 import org.liftblog.model._
 import _root_.net.liftweb.util._
-import _root_.net.liftweb.common._
 import _root_.net.liftweb.util.Helpers
 import net.liftweb.http._
 import Helpers._
 import net.liftweb.mapper.{By, ByList}
 import net.liftweb.textile.TextileParser
+import net.liftweb.common._
 
 
 class Posting extends Logger {
@@ -57,10 +57,8 @@ class Posting extends Logger {
 	 */
 	def add(in: NodeSeq): NodeSeq = {
 		var postValues = Map[String,String]()
-		var title = ""
-		var text = ""
-		var tags = ""
-		def submit() = {
+
+    def submit() = {
 			List("en").foreach(lang => {
 				val title = postValues(lang+"title").trim
 				if(title=="") S.error("Title musn't be empty")
@@ -68,11 +66,12 @@ class Posting extends Logger {
 					val html = postValues(lang+"text") 
 					val post = Post.create.date(new java.util.Date).text(html).title(title)
 					post.save
-					assocTags(post, tags.split(" "))
+					assocTags(post, postValues(lang+"tags").split(" "))
 				}}
 			)
 			if(S.errors.isEmpty) S.redirectTo("/index")
 		}
+
     ((".post" #> List("en").map( lang =>
 		  ".lang" #> lang &
 			".title" #> SHtml.text("", parm => postValues += ((lang+"title",parm)), ("size","55")) &
@@ -82,32 +81,36 @@ class Posting extends Logger {
 	}
 	
 	def edit(in: NodeSeq): NodeSeq = {
-		var title = ""
-		var text = ""
-		val post = Post.find(Index.postid)
-		var tags = PostTag.findAll(By(PostTag.post, post.open_!)).
-			 map(_.tag.obj).filter(_.isDefined).map(_.open_!.text.is).mkString(" ")
-			
-		def submit(p: Post) = {
 
-			if(title=="") S.error("Title musn't be empty") 
+    val post = Post.find(Index.postid)
+
+    post match {
+      case Full(p) =>
+      case Empty => S.error("Post to edit not found"); S.redirectTo("/index")
+      case _ => S.error("Error occured"); S.redirectTo("/index")
+    }
+
+    val p = post.openTheBox
+
+    var tags = PostTag.findAll(By(
+      PostTag.post, p)
+    ).map(_.tag.obj).filter(
+      _.isDefined
+    ).map(_.open_!.text.is).mkString(" ")
+
+		def submit() = {
+
+			if(p.title.isEmpty) S.error("Title musn't be empty")
 			else {
-				val html = text
         p.save
         editTagsFor(p, tags.split(" ").toList)
 				S.redirectTo("/index")
 			}
 		}
 
-		post match {
-			case Full(p) =>
-					(".title" #> SHtml.text(p.title, p.title.set(_), ("size","55")) &
-					".tags" #> SHtml.text(tags, parm => tags=parm) &
-					".text" #> SHtml.textarea(p.text, p.text.set(_), ("id", "markitup")) &
-					"submit" #> SHtml.submit("Save", () => submit(p)))(in)
+		(".title" #> SHtml.text(p.title, p.title.set(_), ("size","55")) &
+		 ".tags" #> SHtml.text(tags, parm => tags=parm) &
+		 ".text" #> (SHtml.textarea(p.text, p.text.set(_), ("id", "markitup")) ++ SHtml.hidden(() => submit())))(in)
 
-			case Empty => S.error("Post to edit not found"); S.redirectTo("/index")
-			case _ => S.error("Error occured"); S.redirectTo("/index")
-		}
 	}
 }
