@@ -1,4 +1,13 @@
 /target
 lift_proto*
+lib_managed
+project/build/target
+project/boot/
 .scala_dependencies
 
+
+*~
+*bkp
+*swp
+.idea
+*.iml

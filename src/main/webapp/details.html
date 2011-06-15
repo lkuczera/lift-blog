@@ -1,31 +1,40 @@
-<lift:surround with="default" at="content">
-    	<lift:Index.show>
-    	<h2><post:title>Post title goes here</post:title></h2>
-		<p><span><post:date/></span> </p>
-		<p><post:text>Post content here</post:text></p>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:lift="http://liftweb.net/">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+    <title>Home</title>
+  </head>
+  <body class="lift:content_id=main">
+    <div id="main" class="lift:surround?with=default;at=content">
+      <div id="post" class="lift:Index.show">
+        <h2><span id="title">Post title goes here</span></h2>
+        <p><span id="date"></span> </p>
+        <p><span id="text">Post content here</span></p>
+      </div>
 
-    	</lift:Index.show>
-    	<span id="comments" name="comments" />
-    	<lift:Index.comments>
-    		<p class="post-footer align-left">
-			 <p style="margin-bottom: 5px; font-weight: bold;"><comment:author/> said...<br/></p>	
-				<p><comment:text/></p>
-    			<p><comment:date/></p>					
-			</p>
-    	</lift:Index.comments>
-    	<div id="new-comment" />
-    	
-    	<lift:Index.addComment>
-    	<p> 
-    		<label>Name:</label><br/>
-    		<comm:author/><br/>
-    		<label>Your Website:</label><br/>
-    		<comm:website/><br/>
-    		<label>Your Comment:</label><br/>
-    		<comm:text cols="50" /><br/>
-    		<comm:submit/>
-    	</p>
-    	<p>You can use <a href="http://en.wikipedia.org/wiki/Textile_%28markup_language%29">textile</a> 
+      <span id="comments" name="comments" />
+
+      <div class="lift:Index.comments" id="commentsDiv">
+        <p class="post-footer align-left">
+          <p style="margin-bottom: 5px; font-weight: bold;"><span id="author"></span>&nbsp; said...<br/></p>	
+          <p><span id="commentText"></span></p>
+          <p><span id="commentDate"></span></p>					
+        </p>
+      </div>
+      <div id="new-comment" />
+      <form class="lift:form.ajax">
+        <p class="lift:Index:addComment" id="addCommentBox"> 
+          <label>Name:</label><br/>
+          <span id="addCommentAuthor"></span><br/>
+          <label>Your Website:</label><br/>
+          <span id="addCommentWebsite"></span><br/>
+          <label>Your Comment:</label><br/>
+          <textarea id="addCommentText"></textarea><br/>
+          <input type="submit" />
+        </p>
+      </form>
+      <p>You can use <a href="http://en.wikipedia.org/wiki/Textile_%28markup_language%29">textile</a> 
     	markup in comments.</p>
-    	</lift:Index.addComment>
-</lift:surround>
+    </div>
+  </body>
+</html>

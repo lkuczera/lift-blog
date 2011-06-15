@@ -26,10 +26,10 @@ class Boot extends Logger {
 			     Props.get("db.user"), Props.get("db.password"))
 
       LiftRules.unloadHooks.append(vendor.closeAllConnections_! _)
-
       DB.defineConnectionManager(DefaultConnectionIdentifier, vendor)
+      
     }
-    Schemifier.schemify(true, Log.infoF _, User, Post, PostTag, Tag, Comment, Property, LinkList, LinkListItem)
+    Schemifier.schemify(true, Schemifier.infoF _, User, Post, PostTag, Tag, Comment, Property, LinkList, LinkListItem)
     // create default user if none is present
     if(DB.runQuery("select * from users")._2.isEmpty) {
 	    val res = this.getClass.getResourceAsStream("/basic.sql");
@@ -45,7 +45,6 @@ class Boot extends Logger {
     // checks if user is logged in
     val loggedIn = If(() => User.loggedIn_?,
               () => RedirectResponse("/user_mgt/login"))
-
     // Build SiteMap            
     val entries = 
     Menu(Loc("Home", List("index"), "Home")) ::
@@ -60,7 +59,7 @@ class Boot extends Logger {
     Menu(Loc("feed", List("feed"), "feed", Hidden)) ::
     Menu(Loc("RssView", List("RssView", "feed"), "RssView", Hidden)) ::
     User.sitemap
-//User.sitemap 
+
     LiftRules.setSiteMap(SiteMap(entries:_*))
     
     /*

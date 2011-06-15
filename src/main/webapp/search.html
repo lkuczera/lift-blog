@@ -1,19 +1,23 @@
-<lift:surround with="default" at="content">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+    <title>Home</title>
+  </head>
+  <body class="lift:content_id=main">
+    <div id="main" class="lift:surround?with=default;at=content">
+      <form class="l:Search.search" action="#" method="get">
+        <h2>Search</h2>
+        <p>
+          <input id="term" type="text" size="55"></input>
+          <input type="submit" value="Search"></input>
+        </p>
 
-	<lift:Search.search form="GET">
-		<h2>Search</h2>
-		<p>
-		<search:searchTerm size="55" />
-		<search:submit />
-		</p>
-	
-    	
-		<ol>
-    		<search:resultItem>
-    			<li><search:itemLink/></li>
-    		</search:resultItem>
-    	</ol>
-    
-    </lift:Search.search>
+        <ol>
+          <li></li>
+        </ol>
 
-</lift:surround>
+      </form>
+    </div>
+  </body>
+</html>
