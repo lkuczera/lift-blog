@@ -1,43 +1,35 @@
-<lift:surround with="default" at="content">
-	<lift:embed what="markitup-head" />
-	<lift:Properties.edit form="POST">
-		<h2>Edit Blog Properties</h2>
-		
-		<p>
-				
-		Blog Title:<br/>
-		<property:title /><br/>
-		
-		Blog Subtitle:<br/>
-		<property:subtitle /><br/>
-		
-		Address:<br/>
-		<property:address /><br/>
-		
-		RSS Description:<br/>
-		<property:rssDescription /><br/>
-		
-		Short Description Title:<br/>
-		<property:shortDescriptionTitle /><br/>
-		
-		Short Description:<br/>
-		<property:shortDescription /><br/>
-		
-		Meta Keywords:<br/>
-		<property:metaKeywords /><br/>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  </head>
+  <body class="lift:content_id=main">
+    <div id="main" class="lift:surround?with=default;at=content">
+      <span class="lift:embed?what=markitup-head">
+        replaced with embedded content
+      </span>
 
-		Meta Description:<br/>
-		<property:metaDescription /><br/>
-		
-		Copyright Note:<br/>
-		<property:copyrightNote /><br/>
+      <form class="lift:Properties.edit" action="#" method="get">
+        <h2>Edit Blog Properties</h2>
+        <p>
+            Blog Title: <br /><div class="title">title</div><br />
+            Blog Subtitle:<br /><div class="subtitle">subtitle</div><br/>
+		    Address:<br /><div class="address">address</div><br/>
+		    RSS Description:<br /><div class="rssDescription">rssDescription</div><br/>
+		    Short Description Title:<br /><div class="shortDescriptionTitle">shortDescriptionTitle</div><br/>
+		    Short Description: <br /><div class="shortDescription">shortDescription</div><br/>
+		    Meta Keywords: <br /><div class="metaKeywords">metaKeywords</div><br/>
+		    Meta Description: <br /><div class="metaDescription">metaDescription</div><br/>
+		    Copyright Note: <br /><div class="copyrightNote">copyrightNote</div><br/>
+		    Theme: <br /><div class="theme">theme</div><br/><br />
 
-		Theme:<br/>
-		<property:theme /><br/>	
-		<br/>
-		
-		<property:submit />
-		
-		</p>
-	</lift:Properties.edit>
-</lift:surround>
+		    <input type="submit" value="Save"></input>
+        </p>
+
+      </form>
+    </div>
+  </body>
+</html>
+
+
+
