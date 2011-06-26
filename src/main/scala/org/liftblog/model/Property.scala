@@ -1,4 +1,5 @@
 package org.liftblog.model
+
 import net.liftweb.mapper._
 import net.liftweb.common._
 

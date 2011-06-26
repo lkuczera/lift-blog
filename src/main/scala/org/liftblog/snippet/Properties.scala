@@ -12,58 +12,45 @@ import scala.xml._
 
 class Properties {
 
-	def edit(in: NodeSeq): NodeSeq = {
+  def edit = {
 
-		
-		var title = ""
-		var subtitle = ""
-		var copyrightNote = ""
-		var theme = ""
-		var address = ""
-		var rssDescription = ""
-		var shortDescriptionTitle = ""	
-		var shortDescription = ""
-	    var metaKeywords = ""
-	    var metaDescription = ""
-			
-		def submit() = {
-			Property.title.value(title).save()
-			Property.subtitle.value(subtitle).save()
-			Property.copyrightNote.value(copyrightNote).save()
-			Property.theme.value(theme).save()
-			Property.address.value(address).save()
-			Property.rssDescription.value(rssDescription).save()
-			Property.shortDescriptionTitle.value(shortDescriptionTitle).save()
-			Property.shortDescription.value(shortDescription).save()
-			Property.metaKeywords.value(metaKeywords).save()
-			Property.metaDescription.value(metaDescription).save()
-			
-			S.redirectTo("/edit_properties")	
-		}
-		
-		bind("property",in,
-				"title" -> SHtml.text(Property.title.value, parm => title=parm, ("size","55")),
-				"subtitle" -> SHtml.text(Property.subtitle.value, parm => subtitle=parm, ("size","55")),
-				"address" -> SHtml.text(Property.address.value, parm => address=parm, ("size","55")),
-				"rssDescription" -> SHtml.textarea(Property.rssDescription.value, parm => rssDescription=parm,("cols","55")),
-				"shortDescriptionTitle" -> SHtml.text(Property.shortDescriptionTitle.value, parm => shortDescriptionTitle=parm, ("size","55")),
-				"shortDescription" -> SHtml.textarea(Property.shortDescription.value, parm => shortDescription=parm,("cols","55")),
-				"metaKeywords" -> SHtml.textarea(Property.metaKeywords.value, parm => metaKeywords=parm,("cols","55")),
-				"metaDescription" -> SHtml.textarea(Property.metaDescription.value, parm => metaDescription=parm,("cols","55")),
-				"copyrightNote" -> SHtml.text(Property.copyrightNote.value, parm => copyrightNote=parm, ("size","55")),
-				"theme" -> SHtml.select(Property.themeNames.map((t=>(t,t))), Full(Property.theme.value), parm => theme=parm),
-				"submit" -> SHtml.submit("Save", submit)
-			)
-			
-	}
+    /**
+     * Only a redirect is necessary because we get/set the values within the render methods.
+     */
+    def process = {
+
+      S.redirectTo("/edit_properties")
+    }
+
+    ".title" #> SHtml.text(Property.title.value,
+                           Property.title.value(_).save(), ("size","55")) &
+		".subtitle" #> SHtml.text(Property.subtitle.value,
+                              Property.subtitle.value(_).save(), ("size","55")) &
+		".address" #> SHtml.text(Property.address.value,
+                             Property.address.value(_).save(), ("size","55")) &
+		".rssDescription" #> SHtml.textarea(Property.rssDescription.value,
+                                        Property.rssDescription.value(_).save(),("cols","55")) &
+		".shortDescriptionTitle" #> SHtml.text(Property.shortDescriptionTitle.value,
+                                           Property.shortDescriptionTitle.value(_).save(), ("size","55")) &
+		".shortDescription" #> SHtml.textarea(Property.shortDescription.value,
+                                          Property.shortDescription.value(_).save(),("cols","55")) &
+		".metaKeywords" #> SHtml.textarea(Property.metaKeywords.value,
+                                      Property.metaKeywords.value(_).save(),("cols","55")) &
+		".metaDescription" #> SHtml.textarea(Property.metaDescription.value,
+                                         Property.metaDescription.value(_).save(),("cols","55")) &
+		".copyrightNote" #> SHtml.text(Property.copyrightNote.value,
+                                   Property.copyrightNote.value(_).save(), ("size","55")) &
+		".theme" #> (SHtml.select(Property.themeNames.map((t=>(t,t))), Full(Property.theme.value),
+                              Property.theme.value(_).save()) ++ SHtml.hidden(() => process))
+  }
+
+
 	
 	def surroundWithSelectedTheme(in: NodeSeq): NodeSeq = 
 		<lift:surround with={ Property.theme.value } at="content">
 			{in}
 		</lift:surround>
-	
-	
-	
+
 	def title: NodeSeq = Property.title.value.asHtml
 	
 	def titleLink: NodeSeq = <a href={Property.address.value}>{Property.title.value}</a>
@@ -85,7 +72,6 @@ class Properties {
 		<meta name="keywords" content={ Property.metaKeywords.value } />
 		
 	def metaDescriptionTag: NodeSeq = 
-		<meta name="description" content={ Property.metaDescription.value } />	
-	
+		<meta name="description" content={ Property.metaDescription.value } />
 	
 }
