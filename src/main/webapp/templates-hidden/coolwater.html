@@ -6,85 +6,86 @@
 </head>
 
 <body>
-<!-- wrap starts here -->
-<div id="wrap">
-		
-	<!--header -->
-	<div id="header">			
-		<h1 id="logo-text"><lift:Properties.titleLink/></h1>		
-		<p id="slogan"><lift:Properties.subtitle/></p>		
-		<div id="header-links">
-			<p>
-				<a href="contact.html" >Contact</a>
-			</p>		
-		</div>		
-						
-	</div>
-		
-	<!-- navigation -->	
-	<div  id="menu">
-			
-	</div>					
-			
-	<!-- content-wrap starts here -->
-	<div id="content-wrap">
-		
-		<div id="main">				
-			<lift:Msgs showAll="true"/>
-	        <lift:bind name="content" />
-				
+	<!-- wrap starts here -->
+	<div id="wrap">
+
+		<!--header -->
+		<div id="header">
+			<h1 id="logo-text">
+				<lift:Properties.titleLink />
+			</h1>
+			<p id="slogan">
+				<lift:Properties.subtitle />
+			</p>
+			<div id="header-links">
+				<p>
+					<a href="contact.html">Contact</a>
+				</p>
+			</div>
+
 		</div>
-			
-		<div id="sidebar">
-			
-			<h2>Search Box</h2>
-      <form method="get" action="/search" class="searchform l:Search.search">
-        <p>
-          <input id="term" type="text" size="55" class="textbox"/>
-          <input type="submit" value="Search" class="button"/>
-        </p>
-			</form>
-					
-			<h2>Sidebar Menu</h2>
-			<lift:Menu.builder 
-			li_item:id="current"/>
-			
-			<h2>Tags</h2>
-			
-			<lift:Index.allTags />
-			
-			<h2><lift:Properties.shortDescriptionTitle /></h2>
-				
-			<lift:Properties.shortDescription />
-			
-			<lift:LinkLists.frontPageLinkList>
-				
-					<h2><link_list:title /></h2>
+
+		<!-- navigation -->
+		<div id="menu"></div>
+
+		<!-- content-wrap starts here -->
+		<div id="content-wrap">
+
+			<lift:Msgs showAll="true" />
+			<lift:bind name="content" />
+
+			<div id="sidebar">
+
+				<h2>Search Box</h2>
+				<form method="get" action="/search" class="searchform l:Search.search">
+					<p>
+						<input id="term" type="text" size="55" class="textbox" /> <input type="submit" value="Search" class="button" />
+					</p>
+				</form>
+
+				<h2>Sidebar Menu</h2>
+				<lift:Menu.builder li_item:id="current" />
+
+				<h2>Tags</h2>
+
+				<lift:Index.allTags />
+
+				<h2>
+					<lift:Properties.shortDescriptionTitle />
+				</h2>
+
+				<lift:Properties.shortDescription />
+
+				<lift:LinkLists.frontPageLinkList>
+
+					<h2>
+						<link_list:title />
+					</h2>
 					<ul>
 						<link_list:links />
 					</ul>
-				
-			</lift:LinkLists.frontPageLinkList>
-					
-		</div>
-				
-	<!-- content-wrap ends here -->	
-	</div>
-					
-	<!--footer starts here-->
-	<div id="footer">
-			
-		<p>
-		<a href="/user_mgt/login">Admin</a> | <strong><lift:Properties.copyrightNote/></strong> |
-		<a href="http://www.stylishtemplate.com/" title="Website Templates">website templates</a> by <a href="http://www.styleshout.com/">styleshout</a> |
-		Valid <a href="http://validator.w3.org/check?uri=referer">XHTML</a> | 
-		<a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>   		
-   	</p>
-				
-	</div>	
 
-<!-- wrap ends here -->
-</div>
+				</lift:LinkLists.frontPageLinkList>
+
+			</div>
+
+			<!-- content-wrap ends here -->
+		</div>
+
+		<!--footer starts here-->
+		<div id="footer">
+
+			<p>
+				<a href="/user_mgt/login">Admin</a> | <strong><lift:Properties.copyrightNote />
+				</strong> | <a href="http://www.stylishtemplate.com/" title="Website Templates">website templates</a> by <a
+					href="http://www.styleshout.com/">styleshout</a> | Valid <a href="http://validator.w3.org/check?uri=referer">XHTML</a>
+				| <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
+			</p>
+
+		</div>
+
+		<!-- wrap ends here -->
+	</div>
 
 
 </body>
