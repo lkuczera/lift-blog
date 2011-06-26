@@ -17,7 +17,7 @@ import JE._
 import net.liftweb.http.js.jquery.JqJsCmds._
 import net.liftweb.textile.TextileParser
 
-class Index {
+class Index extends Logger {
   private val strLength = 512
   /**
    * Renders posts list.
@@ -41,12 +41,12 @@ class Index {
       Text("Comments(%d)".format((comments)))
     }
 
-    "#posts" #> posts.map(post => "#title" #> <a href={ post.urlify }>{ post.title }</a> &
-      "#text" #> <xml:group>{ Unparsed(post.text) }</xml:group> &
-      "#date" #> (new SimpleDateFormat(Const.format) format post.date.get) &
+    "#posts" #> posts.map(post => "#title *" #> <a href={ post.urlify }>{ post.title }</a> &
+      "#text *" #> <xml:group>{ Unparsed(post.text) }</xml:group> &
+      "#date *" #> (new SimpleDateFormat(Const.format) format post.date.get) &
       "#more" #> <a href={ post.urlify } class="readmore">Read more</a> &
       "#comments" #> <a href={ post.urlify + "#comments" } class="comments">{ commentsText(post) }</a> &
-      "#edit" #> (if (User.loggedIn_?) SHtml.link("/edit", () => Index.postidVar(post.id), Text("Edit"), ("class", "readmore"))
+      "#edit" #> (if (User.loggedIn_?) SHtml.link("/edit", () => Index.postVar(Full(Post)), Text("Edit"), ("class", "readmore"))
       else Text("")))
 
   }
@@ -59,11 +59,15 @@ class Index {
   def show(): CssSel = {
     val postTitle = S.param("title") openOr S.redirectTo("/404.html")
     Post.find(By(Post.title, postTitle)) match {
-      case Full(post) => "#post" #> ( 
-        "#title" #> post.title &
-        "#text" #> <xml:group>{ Unparsed(post.text.is) }</xml:group> &
-        "#date" #> (new SimpleDateFormat(Const.format) format post.date.get)
-        )
+      case Full(post) => {
+        // set post in variable for later refering
+        Index.postVar(Full(post))
+        // render html stuff
+        "#post" #> ("#title *" #> post.title &
+	        "#text *" #> <xml:group>{ Unparsed(post.text.is) }</xml:group> &
+	        "#date *" #> (new SimpleDateFormat(Const.format) format post.date.get)
+	    )
+      }
       case Empty => S.redirectTo("/404.html")
       case _ => S.error("Error occured"); S.redirectTo("/index")
     }
@@ -76,9 +80,9 @@ class Index {
     val postTitle = S.param("title") openOr S.redirectTo("/404.html")
     val postid = Post find (By(Post.title, postTitle)) openOr S.redirectTo("/404.html")
     "#commentsDiv" #> Comment.findAll(By(Comment.postid, postid)).map(comment =>
-      "#author" #> <a href={ comment.website }>{ comment.author }</a> &
-        "#text" #> <xml:group>{ Unparsed(comment.text) }</xml:group> & 
-        "#date" #> (new SimpleDateFormat("E d MMM, HH:mm") format comment.date.get))
+      "#author *" #> <a href={ comment.website }>{ comment.author }</a> &
+        "#commentText" #> <xml:group>{ Unparsed(comment.text) }</xml:group> & 
+        "#commentDate" #> (new SimpleDateFormat("E d MMM, HH:mm") format comment.date.get))
   }
 
   /**
@@ -93,10 +97,12 @@ class Index {
       val now = new java.util.Date
       val html = TextileParser.toHtml(text, false).toString
       val c = Comment.create.author(author).text(html).postid(Index.postid).date(now).website(website)
-      c.validate
-      c.save
+      val errors = c.validate
+      val saved_? = c.save
+      debug("validation errors: "+errors)
+      debug("comment saved?: " +saved_?)
       AppendHtml("new-comment", (<p class="post-footer align-left">
-                                   <p style="margin-bottom: 5px; font-weight: bold;"><a href={ website }>{ author }</a>said...<br/></p>
+                                   <p style="margin-bottom: 5px; font-weight: bold;"><a href={ website }>{ author }</a>&nbsp; said...<br/></p>
                                    <p>{ Unparsed(html) }</p>
                                    <p>{ now }</p>
                                  </p>)) & clearForm
@@ -122,8 +128,8 @@ class Index {
 
 object Index {
 
-  object postidVar extends RequestVar(S.param("postid").map(_.toLong) openOr 0L)
+  object postVar extends RequestVar[Box[Post]](Empty)
 
-  def postid: Long = postidVar.is
+  def postid: Long = postVar.get.map(_.id.is) openOr -1L
 
 }
