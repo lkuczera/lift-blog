@@ -10,7 +10,10 @@ class LiftProject(info: ProjectInfo) extends DefaultWebProject(info) with Eclips
 
   // If you're using JRebel for Lift development, uncomment
   // this line
-  // override def scanDirectories = Nil
+  override def scanDirectories = Nil
+  
+  // run directly from source dir
+  override def jettyWebappPath  = webappPath
 
   override def libraryDependencies = Set(
     "net.liftweb" %% "lift-webkit" % liftVersion % "compile",
