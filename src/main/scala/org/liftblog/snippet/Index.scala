@@ -37,7 +37,7 @@ class Index extends Logger {
 
     //get number of comments for current post and bind html link in the view
     def commentsText(post: Post) = {
-      val comments = (Comment findAll By(Comment.postid, post.id)).length
+      val comments = Comment.count(By(Comment.postid, post.id))
       Text("Comments(%d)".format((comments)))
     }
 
