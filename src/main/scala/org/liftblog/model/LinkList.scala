@@ -12,7 +12,7 @@ class LinkList extends LongKeyedMapper[LinkList] with IdPK  {
 	object description extends MappedText(this)
 	
 	object position extends MappedInt(this){
-		override def dbIndexed_? = true
+		//override def dbIndexed_? = true
 	}
 	
 	object userId extends MappedLongForeignKey(this,User)
