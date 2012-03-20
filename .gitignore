@@ -1,8 +1,9 @@
-/target
+target
 lift_proto*
 lib_managed
 project/build/target
 project/boot/
+project/plugins/target
 .scala_dependencies
 
 
