@@ -29,4 +29,5 @@ p: demo11
 
 Have fun!
 
-Lift-blog needs new design. If you would like to contribute one please contact team :)
+Lift-blog needs new design. If you would like to contribute one please contact me.
+

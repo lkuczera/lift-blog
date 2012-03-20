@@ -18,7 +18,7 @@ class LinkListItem extends LongKeyedMapper[LinkListItem] with IdPK  {
 	}
 	
 	object position extends MappedInt(this){
-		override def dbIndexed_? = true
+		//override def dbIndexed_? = true
 	}
 	
 	def moveUp() = move(-1)
